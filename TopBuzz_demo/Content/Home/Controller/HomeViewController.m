@@ -9,15 +9,34 @@
 #import "DJHomeView.h"
 #import "DJScreen.h"
 #import "DJCollectionViewCell.h"
+#import "DJHomeViewModel.h"
+
 
 @interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) DJHomeView *homeView;
 @property (nonatomic, strong) DJCollectionViewCell *cell;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) DJHomeViewModel *viewModel;
+@property (nonatomic, strong) NSMutableArray <DJCollectionItemInfo *> *collectionItemInfoArray;
+@property (nonatomic, assign) int currentPage;
 
 @end
 
 @implementation HomeViewController
+
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        DJHomeViewModel *viewModel = [[DJHomeViewModel alloc] init];
+        [self bindViewModel:viewModel];
+        [_viewModel loadCollectionItemInfoDataWithType:HotType Page:1];
+        _currentPage = 1;
+        
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,10 +51,27 @@
     [self.homeView.videoCollectionViewArray[0] registerClass:[DJCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     
-    
-    
-    
 }
+
+- (void)bindViewModel:(DJHomeViewModel *)viewModel {
+    _viewModel = viewModel;
+    [viewModel addObserver:self forKeyPath:@"collectionItemInfoArray" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+// 观察者回调
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"collectionItemInfoArray"]) {
+        // 处理属性变化
+        id newValue = change[NSKeyValueChangeNewKey];
+        NSLog(@"Property Value Changed: %@", newValue);
+    }
+}
+
+- (void)dealloc {
+    [self.viewModel removeObserver:self forKeyPath:@"collectionItemInfoArray"];
+}
+
+
 
 #pragma mark UICollectionViewDelegate
 
@@ -60,83 +96,9 @@
 //    }
 //}
 //
-//- (void)encodeWithCoder:(nonnull NSCoder *)coder { 
-//    <#code#>
-//}
-//
-//- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection { 
-//    <#code#>
-//}
-//
-//- (void)preferredContentSizeDidChangeForChildContentContainer:(nonnull id<UIContentContainer>)container { 
-//    <#code#>
-//}
-//
-//- (CGSize)sizeForChildContentContainer:(nonnull id<UIContentContainer>)container withParentContainerSize:(CGSize)parentSize { 
-//    <#code#>
-//}
-//
-//- (void)systemLayoutFittingSizeDidChangeForChildContentContainer:(nonnull id<UIContentContainer>)container { 
-//    <#code#>
-//}
-//
-//- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)coordinator { 
-//    <#code#>
-//}
-//
-//- (void)willTransitionToTraitCollection:(nonnull UITraitCollection *)newCollection withTransitionCoordinator:(nonnull id<UIViewControllerTransitionCoordinator>)coordinator { 
-//    <#code#>
-//}
-//
-//- (void)didUpdateFocusInContext:(nonnull UIFocusUpdateContext *)context withAnimationCoordinator:(nonnull UIFocusAnimationCoordinator *)coordinator { 
-//    <#code#>
-//}
-//
-//- (void)setNeedsFocusUpdate { 
-//    <#code#>
-//}
-//
-//- (BOOL)shouldUpdateFocusInContext:(nonnull UIFocusUpdateContext *)context { 
-//    <#code#>
-//}
-//
-//- (void)updateFocusIfNeeded { 
-//    <#code#>
-//}
 
 
 
-
-
-
-
-//self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-//[self.view addSubview:self.imageView];
-
-
-
-//NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://tvax2.sinaimg.cn/crop.0.0.1080.1080.50/005YEhFZly8hhmc4ltc3kj30u00u040c.jpg?KID=imgbed,tva&Expires=1702398663&ssig=B0hxGnLh%2F4"]];
-//[request setValue:@"https://weibo.com/" forHTTPHeaderField:@"Referer"];
-//[request setHTTPMethod:@"GET"];
-//// 创建NSURLSession对象
-//NSURLSession *session = [NSURLSession sharedSession];
-//
-//// 创建NSURLSessionDataTask对象
-//NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//    if (error) {
-//        NSLog(@"Error: %@", error);
-//    } else {
-//        // 处理响应数据
-//        UIImage *image = [UIImage imageWithData:data];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            self.imageView.image = image;
-//        });
-//
-//    }
-//}];
-//
-//// 启动任务
-//[dataTask resume];
 
 
 @end

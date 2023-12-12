@@ -9,8 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @class SourceDataItemInfo;
-typedef void(^DataListItemInfoBlock)(NSArray<SourceDataItemInfo *> *dataArray);//返回一个SourceDataItemInfo类型的数组
-
+@class PictureInfo;
 /// 请求类型
 typedef NS_ENUM(NSUInteger, RequestType) {
     HotType                  = 0,  // 热门
@@ -22,6 +21,7 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 
 
 @interface DJHomeModel : NSObject
+@property (nonatomic, strong, readonly) NSArray<SourceDataItemInfo *> *sourceDataItemArray;
 
 
 /// 请求网络数据资源
@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 ///   - finishBlock: 回调Block，返回模型数组
 ///   - type: 请求资源类型
 ///   - page: 请求页码
-- (void)loadSourceDataItemInfoList:(DataListItemInfoBlock)finishBlock RequestType:(RequestType)type Page:(int)page;
+- (void)loadSourceDataItemInfoListWithRequestType:(RequestType)type Page:(int)page;
 
 @end
 
@@ -38,9 +38,9 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 @interface SourceDataItemInfo : NSObject
 @property(nonatomic,copy,readwrite)NSString *created_at;        //发博时间
 @property(nonatomic,copy,readwrite)NSString *text;              //微博内容
-@property(nonatomic,copy,readwrite)NSString *thumbnail_pic;     //缩略图url
-@property(nonatomic,copy,readwrite)NSString *bmiddle_pic;       //中尺寸图片url
-@property(nonatomic,copy,readwrite)NSString *original_pic;      //原图url
+@property(nonatomic,copy,readwrite)PictureInfo *thumbnail_pic;     //缩略图url
+@property(nonatomic,copy,readwrite)PictureInfo *bmiddle_pic;       //中尺寸图片url
+@property(nonatomic,copy,readwrite)PictureInfo *original_pic;      //原图url
 @property(nonatomic,copy,readwrite)NSNumber *reposts_count;     //转发数
 @property(nonatomic,copy,readwrite)NSNumber *comments_count;    //评论数
 @property(nonatomic,copy,readwrite)NSNumber *attitudes_count;   //表态数
@@ -64,6 +64,13 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 /// - Parameter dictionary: 字典原数据
 + (SourceDataItemInfo *)getSourceModelFromDictionary:(NSDictionary *)dictionary;
 
+@end
+
+@interface PictureInfo : NSObject
+@property (nonatomic, strong) NSString *urlString;
+@property (nonatomic, assign) NSNumber *width;
+@property (nonatomic, assign) NSNumber *height;
+ 
 @end
 
 
