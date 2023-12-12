@@ -7,6 +7,8 @@
 
 #import "DJHomeView.h"
 #import "DJScreen.h"
+#import "DJColor.h"
+#import "DJCollectionLayout.h"
 
 #define VIDEOTYPE_COUNT 5
 
@@ -25,22 +27,27 @@
         _homeScrollView.showsVerticalScrollIndicator = NO;
         _homeScrollView.showsHorizontalScrollIndicator = NO;
         
-        
-        _homeScrollView.backgroundColor = [UIColor greenColor];
+        _homeScrollView.backgroundColor = LIGHT_GRAY;
+
         
         // 加载 videoScrollView
         _videoCollectionViewArray = [NSMutableArray arrayWithCapacity:VIDEOTYPE_COUNT];
         for (int i = 0; i < VIDEOTYPE_COUNT; i++) {
-            UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+            DJCollectionLayout * layout = [[DJCollectionLayout alloc]init];
+            layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+            layout.itemCount=100;
+            
+            layout.minimumLineSpacing = 10;
+            layout.minimumInteritemSpacing = 10;
+
             _videoCollectionViewArray[i] = [[DJCollectionView alloc] initWithFrame:CGRectMake(
                                                        VIEW_WIDTH(_homeScrollView) * i,
-                                                       -TOPSTATUSBAR_HEIGHT,
+                                                       -TOPSTATUSBAR_HEIGHT + NAVIGATIONFULL_HEIGHT,
                                                        VIEW_WIDTH(_homeScrollView),
-                                                       VIEW_HEIGHT(_homeScrollView)) collectionViewLayout:layout];
+                                                       VIEW_HEIGHT(_homeScrollView) - NAVIGATIONFULL_HEIGHT) collectionViewLayout:layout];
             [_videoCollectionViewArray[i] setAlwaysBounceVertical:YES];
-            [_videoCollectionViewArray[i] setBounces:NO];
-            [_videoCollectionViewArray[i] setPagingEnabled:YES];
-            [_videoCollectionViewArray[i] setShowsVerticalScrollIndicator:NO];
+            [_videoCollectionViewArray[i] setBounces:YES];
+            [_videoCollectionViewArray[i] setShowsVerticalScrollIndicator:YES];
             [_videoCollectionViewArray[i] setShowsHorizontalScrollIndicator:NO];
             [_homeScrollView addSubview:_videoCollectionViewArray[i]];
             
