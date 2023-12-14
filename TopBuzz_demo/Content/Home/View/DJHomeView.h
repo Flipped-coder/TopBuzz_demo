@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DJHomeView : UIView
+@interface DJHomeView : UIView <UIScrollViewDelegate>
 @property (nonatomic, strong) DJHomeNavigationBar *videoNavBar;
 @property (nonatomic, strong) UIScrollView *homeScrollView;
 @property (nonatomic, strong) NSMutableArray<DJCollectionView *> *videoCollectionViewArray;

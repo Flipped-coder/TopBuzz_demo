@@ -11,7 +11,7 @@
 
 #define VIDEOTYPE_COUNT 5
 
-@implementation DJHomeView
+@implementation DJHomeView 
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -25,14 +25,13 @@
         _homeScrollView.pagingEnabled = YES;
         _homeScrollView.showsVerticalScrollIndicator = NO;
         _homeScrollView.showsHorizontalScrollIndicator = NO;
-        
         _homeScrollView.backgroundColor = LIGHT_GRAY;
-
+        _homeScrollView.delegate = self;
         
         // 加载 videoScrollView
         _videoCollectionViewArray = [NSMutableArray arrayWithCapacity:VIDEOTYPE_COUNT];
         for (int i = 0; i < 1; i++) {
-            _layout = [[DJCollectionLayout alloc]init];
+            _layout = [[DJCollectionLayout alloc] init];
             _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
             
             _layout.minimumLineSpacing = 10;
@@ -59,11 +58,87 @@
         // 加载自定义navigationBar
         _videoNavBar = [[DJHomeNavigationBar alloc] initWithFrame:CGRectMake(0, TOPSTATUSBAR_HEIGHT, SCREEN_WIDTH, NAVIGATION_HEIGHT)];
         [_videoNavBar loadVideoNavBar];
+        
+        [_videoNavBar.hotBtn addTarget:self action:@selector(clickNavBarHotBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_videoNavBar.localBtn addTarget:self action:@selector(clickNavBarLocalBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_videoNavBar.internationBtn addTarget:self action:@selector(clickNavBarInternationBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_videoNavBar.financeBtn addTarget:self action:@selector(clickNavBarFinanceBtn) forControlEvents:UIControlEventTouchUpInside];
+        [_videoNavBar.scienceBtn addTarget:self action:@selector(clickNavBarScienceBtn) forControlEvents:UIControlEventTouchUpInside];
+
+        
         [self addSubview:_videoNavBar];
     }
     return self;
 }
 
+
+- (void)clickNavBarHotBtn {
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.videoNavBar.slider.frame = CGRectMake(HOT_CENTER_X(strongSelf.videoNavBar) - VIEW_WIDTH(strongSelf.videoNavBar.slider) / 2,
+                                                            VIEW_Y(strongSelf.videoNavBar.slider),
+                                                            VIEW_WIDTH(strongSelf.videoNavBar.slider),
+                                                            VIEW_HEIGHT(strongSelf.videoNavBar.slider));
+        [strongSelf.homeScrollView setContentOffset:CGPointMake(0, -TOPSTATUSBAR_HEIGHT)];
+    }];
+}
+
+- (void)clickNavBarLocalBtn {
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.videoNavBar.slider.frame = CGRectMake(LOCAL_CENTER_X(strongSelf.videoNavBar) - VIEW_WIDTH(strongSelf.videoNavBar.slider) / 2,
+                                                            VIEW_Y(strongSelf.videoNavBar.slider),
+                                                            VIEW_WIDTH(strongSelf.videoNavBar.slider),
+                                                            VIEW_HEIGHT(strongSelf.videoNavBar.slider));
+        [strongSelf.homeScrollView setContentOffset:CGPointMake(SCREEN_WIDTH, -TOPSTATUSBAR_HEIGHT)];
+    }];
+}
+
+- (void)clickNavBarInternationBtn {
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.videoNavBar.slider.frame = CGRectMake(INTERNATION_CENTER_X(strongSelf.videoNavBar) - VIEW_WIDTH(strongSelf.videoNavBar.slider) / 2,
+                                                            VIEW_Y(strongSelf.videoNavBar.slider),
+                                                            VIEW_WIDTH(strongSelf.videoNavBar.slider),
+                                                            VIEW_HEIGHT(strongSelf.videoNavBar.slider));
+        [strongSelf.homeScrollView setContentOffset:CGPointMake(SCREEN_WIDTH * 2, -TOPSTATUSBAR_HEIGHT)];
+    }];
+}
+
+- (void)clickNavBarFinanceBtn {
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.videoNavBar.slider.frame = CGRectMake(FINANCE_CENTER_X(strongSelf.videoNavBar) - VIEW_WIDTH(strongSelf.videoNavBar.slider) / 2,
+                                                            VIEW_Y(strongSelf.videoNavBar.slider),
+                                                            VIEW_WIDTH(strongSelf.videoNavBar.slider),
+                                                            VIEW_HEIGHT(strongSelf.videoNavBar.slider));
+        [strongSelf.homeScrollView setContentOffset:CGPointMake(SCREEN_WIDTH * 3, -TOPSTATUSBAR_HEIGHT)];
+    }];
+}
+
+- (void)clickNavBarScienceBtn {
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:0.3 animations:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.videoNavBar.slider.frame = CGRectMake(SCIENCE_CENTER_X(strongSelf.videoNavBar) - VIEW_WIDTH(strongSelf.videoNavBar.slider) / 2,
+                                                            VIEW_Y(strongSelf.videoNavBar.slider),
+                                                            VIEW_WIDTH(strongSelf.videoNavBar.slider),
+                                                            VIEW_HEIGHT(strongSelf.videoNavBar.slider));
+        [strongSelf.homeScrollView setContentOffset:CGPointMake(SCREEN_WIDTH * 4, -TOPSTATUSBAR_HEIGHT)];
+    }];
+}
+
+
+#pragma mark --UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    _videoNavBar.slider.center = CGPointMake(HOT_CENTER_X(_videoNavBar) + (scrollView.bounds.origin.x / (SCREEN_WIDTH * 4)) * (SCIENCE_CENTER_X(_videoNavBar) - HOT_CENTER_X(_videoNavBar)), VIEW_Y(_videoNavBar.slider) + 1.5);
+    
+    CGPoint contentOffset = scrollView.contentOffset;
+    NSLog(@"Current Scroll Position: x=%.2f, y=%.2f", contentOffset.x, contentOffset.y);}
 
 
 
