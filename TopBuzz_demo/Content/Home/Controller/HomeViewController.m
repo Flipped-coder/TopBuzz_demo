@@ -10,6 +10,7 @@
 #import "DJScreen.h"
 #import "DJCollectionViewCell.h"
 #import "DJHomeViewModel.h"
+#import "DJDetailViewController.h"
 
 
 @interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
@@ -47,7 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController.navigationBar setHidden:YES];
 
     
     _homeView = [[DJHomeView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - TABBARFULL_HEIGHT)];
@@ -116,36 +117,12 @@
     return _collectionItemInfoArray.count;
 }
 
-#pragma mark - UIScrollViewDelegate
-//
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    // 获取垂直方向上的滑动速度
-//    CGPoint currentOffset = scrollView.contentOffset;
-//    NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
-//     
-//    // 计算垂直方向上的位移
-//    CGFloat deltaY = currentOffset.y - lastOffset.y;
-//     
-//    // 计算时间的变化
-//    NSTimeInterval deltaTime = currentTime - lastTime;
-//     
-//    // 计算垂直方向上的滑动速度
-//    CGFloat verticalSpeed = deltaY / deltaTime;
-//     
-//    // 更新上一次的偏移和时间
-//    lastOffset = currentOffset;
-//    lastTime = currentTime;
-//    NSLog(@"Vertical Speed: %f", verticalSpeed);
-//
-//    if (verticalSpeed > 5000) {
-//        scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
-//    }
-//    if (verticalSpeed < 3000) {
-//        scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
-//    }
-//
-//}
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    DJDetailViewController *detailVC = [[DJDetailViewController alloc] init];
+    detailVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
 
 
 

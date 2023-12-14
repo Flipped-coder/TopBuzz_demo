@@ -30,6 +30,7 @@
 		3574D29C2B2850A40052BC57 /* DJCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3574D29B2B2850A40052BC57 /* DJCollectionView.m */; };
 		3574D29F2B2881F10052BC57 /* DJCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3574D29E2B2881F10052BC57 /* DJCollectionLayout.m */; };
 		35D669C52B28886F00AB2A0D /* DJCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D669C42B28886F00AB2A0D /* DJCollectionViewCell.m */; };
+		35EC82332B2B2A4C00D93960 /* DJDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EC82322B2B2A4C00D93960 /* DJDetailViewController.m */; };
 		35EFFF452B2ACD3200BC6A75 /* DJWebImageCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EFFF442B2ACD3200BC6A75 /* DJWebImageCacheManager.m */; };
 		35EFFF482B2ADFFC00BC6A75 /* DJDiskCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EFFF472B2ADFFC00BC6A75 /* DJDiskCacheManager.m */; };
 /* End PBXBuildFile section */
@@ -96,6 +97,8 @@
 		3574D29E2B2881F10052BC57 /* DJCollectionLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJCollectionLayout.m; sourceTree = "<group>"; };
 		35D669C32B28886F00AB2A0D /* DJCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewCell.h; sourceTree = "<group>"; };
 		35D669C42B28886F00AB2A0D /* DJCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewCell.m; sourceTree = "<group>"; };
+		35EC82312B2B2A4C00D93960 /* DJDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJDetailViewController.h; sourceTree = "<group>"; };
+		35EC82322B2B2A4C00D93960 /* DJDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJDetailViewController.m; sourceTree = "<group>"; };
 		35EFFF432B2ACD3200BC6A75 /* DJWebImageCacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJWebImageCacheManager.h; sourceTree = "<group>"; };
 		35EFFF442B2ACD3200BC6A75 /* DJWebImageCacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJWebImageCacheManager.m; sourceTree = "<group>"; };
 		35EFFF462B2ADFFC00BC6A75 /* DJDiskCacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJDiskCacheManager.h; sourceTree = "<group>"; };
@@ -199,11 +202,8 @@
 		353938332B2841D2003CB121 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				3539383A2B28426F003CB121 /* DJDevice.h */,
-				3539383B2B28426F003CB121 /* DJDevice.m */,
-				3574D28F2B284DB00052BC57 /* DJScreen.h */,
-				3574D2942B284FA70052BC57 /* DJColor.h */,
-				3574D2952B284FA70052BC57 /* DJColor.m */,
+				35CEF4322B2A326800B1CFFB /* DJWebImage */,
+				35EC822F2B2B2A1500D93960 /* UITool */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -211,8 +211,8 @@
 		3574D27A2B2848410052BC57 /* Content */ = {
 			isa = PBXGroup;
 			children = (
-				35CEF4322B2A326800B1CFFB /* System */,
 				3574D27C2B2848D90052BC57 /* Home */,
+				35EC82302B2B2A2C00D93960 /* DetailPage */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -267,7 +267,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		35CEF4322B2A326800B1CFFB /* System */ = {
+		35CEF4322B2A326800B1CFFB /* DJWebImage */ = {
 			isa = PBXGroup;
 			children = (
 				350E04F22B2AC29800146109 /* DJWebImage.h */,
@@ -277,7 +277,7 @@
 				35EFFF462B2ADFFC00BC6A75 /* DJDiskCacheManager.h */,
 				35EFFF472B2ADFFC00BC6A75 /* DJDiskCacheManager.m */,
 			);
-			path = System;
+			path = DJWebImage;
 			sourceTree = "<group>";
 		};
 		35D669C22B28884200AB2A0D /* CollectionView */ = {
@@ -291,6 +291,27 @@
 				35D669C42B28886F00AB2A0D /* DJCollectionViewCell.m */,
 			);
 			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		35EC822F2B2B2A1500D93960 /* UITool */ = {
+			isa = PBXGroup;
+			children = (
+				3539383A2B28426F003CB121 /* DJDevice.h */,
+				3539383B2B28426F003CB121 /* DJDevice.m */,
+				3574D28F2B284DB00052BC57 /* DJScreen.h */,
+				3574D2942B284FA70052BC57 /* DJColor.h */,
+				3574D2952B284FA70052BC57 /* DJColor.m */,
+			);
+			path = UITool;
+			sourceTree = "<group>";
+		};
+		35EC82302B2B2A2C00D93960 /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				35EC82312B2B2A4C00D93960 /* DJDetailViewController.h */,
+				35EC82322B2B2A4C00D93960 /* DJDetailViewController.m */,
+			);
+			path = DetailPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,6 +447,7 @@
 				3574D2882B284A000052BC57 /* DJHomeView.m in Sources */,
 				353938322B2841A1003CB121 /* DJTabBar.m in Sources */,
 				3566C87C2B2892CF0023BA7A /* DJHomeModel.m in Sources */,
+				35EC82332B2B2A4C00D93960 /* DJDetailViewController.m in Sources */,
 				3574D29F2B2881F10052BC57 /* DJCollectionLayout.m in Sources */,
 				350E04F42B2AC29800146109 /* DJWebImage.m in Sources */,
 				3574D28B2B284A170052BC57 /* DJHomeNavigationBar.m in Sources */,
