@@ -27,26 +27,26 @@
 
 @implementation DJCollectionView
 
-
-- (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout collectionType:(RequestType)type {
-    self = [self initWithFrame:frame collectionViewLayout:layout];
+- (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
+    self = [super initWithFrame:frame collectionViewLayout:layout];
     if (self) {
         self.delegate = self;
         self.dataSource = self;
         [self registerClass:[DJCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-        _layout = layout;
+        _layout = (DJCollectionLayout *)layout;
         _viewModel = [[DJHomeViewModel alloc] init];
         [self bindViewModel:_viewModel];
-        _currentType = type;
         _currentPage = 1;
         _collectionItemInfoArray = @[].mutableCopy;
         _allowRequest = YES;
         _arraySemaphore = dispatch_semaphore_create(1);
-        [_viewModel loadCollectionItemInfoDataWithType:_currentType Page:_currentPage++];
-
-        
     }
     return self;
+}
+
+- (void)loadCollectionViewDataWithType:(RequestType)type {
+    _currentType = type;
+    [_viewModel loadCollectionItemInfoDataWithType:_currentType Page:_currentPage++];
 }
 
 

@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DJCollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDataSource>
 
-- (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout collectionType:(RequestType)type;
-
+- (void)loadCollectionViewDataWithType:(RequestType)type;
 
 @end
 

@@ -30,7 +30,7 @@
         
         // 加载 videoScrollView
         _videoCollectionViewArray = [NSMutableArray arrayWithCapacity:VIDEOTYPE_COUNT];
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < VIDEOTYPE_COUNT ; i++) {
             _layout = [[DJCollectionLayout alloc] init];
             _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
             
@@ -41,15 +41,15 @@
                                                        VIEW_WIDTH(_homeScrollView) * i,
                                                        -TOPSTATUSBAR_HEIGHT + NAVIGATIONFULL_HEIGHT,
                                                        VIEW_WIDTH(_homeScrollView),
-                                                       VIEW_HEIGHT(_homeScrollView) - NAVIGATIONFULL_HEIGHT) collectionViewLayout:_layout collectionType:(RequestType)i];
+                                                       VIEW_HEIGHT(_homeScrollView) - NAVIGATIONFULL_HEIGHT) collectionViewLayout:_layout];
             [_videoCollectionViewArray[i] setAlwaysBounceVertical:YES];
             [_videoCollectionViewArray[i] setBounces:YES];
             [_videoCollectionViewArray[i] setShowsVerticalScrollIndicator:YES];
             [_videoCollectionViewArray[i] setShowsHorizontalScrollIndicator:NO];
             _videoCollectionViewArray[i].backgroundColor = WECHAT_BACKGROUND_GREY;
             [_homeScrollView addSubview:_videoCollectionViewArray[i]];
-            
         }
+        [_videoCollectionViewArray[0] loadCollectionViewDataWithType:HotType];
         
         [self addSubview:_homeScrollView];
         
@@ -85,6 +85,10 @@
 }
 
 - (void)clickNavBarLocalBtn {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [_videoCollectionViewArray[1] loadCollectionViewDataWithType:LocalType];
+    });
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -97,6 +101,10 @@
 }
 
 - (void)clickNavBarInternationBtn {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [_videoCollectionViewArray[2] loadCollectionViewDataWithType:InternationType];
+    });
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -109,6 +117,10 @@
 }
 
 - (void)clickNavBarFinanceBtn {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [_videoCollectionViewArray[3] loadCollectionViewDataWithType:FinanceType];
+    });
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -121,6 +133,10 @@
 }
 
 - (void)clickNavBarScienceBtn {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [_videoCollectionViewArray[4] loadCollectionViewDataWithType:ScienceType];
+    });
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
