@@ -48,9 +48,7 @@
                         }
                     }
                 }
-                [self willChangeValueForKey:@"sourceDataItemArray"];
                 strongSelf.sourceDataItemArray = listItemArray;
-                [self didChangeValueForKey:@"sourceDataItemArray"];
             }
         }
     }];

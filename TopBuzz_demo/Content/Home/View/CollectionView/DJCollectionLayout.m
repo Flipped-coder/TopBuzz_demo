@@ -12,7 +12,6 @@
 
 @implementation DJCollectionLayout {
     CGFloat colHight[2];
-    NSMutableArray *_attributeAttay;
     CGFloat lastCell_Y;
 }
 
@@ -69,7 +68,8 @@
         lastCell_Y = MAX(colHight[0], colHight[1]);
     }
     [_attributeAttay addObjectsFromArray:arr];
-    
+    NSLog(@"_attributeAttay addObjects  Count = %lu ", (unsigned long)_attributeAttay.count);
+
     //设置itemSize来确保滑动范围的正确 这里是通过将所有的item高度平均化，计算出来的(以最高的列位标准)
     if (colHight[0] > colHight[1]) {
         self.itemSize = CGSizeMake(WIDTH, (colHight[0] - self.sectionInset.top) * 2 / _attributeAttay.count - self.minimumLineSpacing);

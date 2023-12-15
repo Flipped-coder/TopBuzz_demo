@@ -12,6 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DJCollectionLayout : UICollectionViewFlowLayout
+@property (nonatomic, strong) NSMutableArray *attributeAttay;
+
 
 - (void)appendCollectionItemInfoArray:(NSArray <DJCollectionItemInfo *> *)array;
 

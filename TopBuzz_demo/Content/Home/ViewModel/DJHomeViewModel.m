@@ -57,11 +57,10 @@
             [listItemArray addObject:itemInfo];
         }
         
-        [self willChangeValueForKey:@"collectionItemInfoArray"];
         self.collectionItemInfoArray = listItemArray;
-        [self didChangeValueForKey:@"collectionItemInfoArray"];
         
         [_collectionItemInfoArrays addObjectsFromArray:_collectionItemInfoArray];
+
     }
 }
 

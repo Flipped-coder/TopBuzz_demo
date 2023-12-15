@@ -18,6 +18,7 @@
 
 + (void)djWebImageWithImageView:(UIImageView *)imageView urlString:(NSString *)urlString {
 
+//    return;
     UIImage *image = [DJWebImage getMemoryCacheImageWithUrlString:urlString];
     if (image) {
         imageView.image = image;

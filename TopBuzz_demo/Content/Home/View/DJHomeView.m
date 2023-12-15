@@ -188,9 +188,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     _videoNavBar.slider.center = CGPointMake(HOT_CENTER_X(_videoNavBar) + (scrollView.bounds.origin.x / (SCREEN_WIDTH * 4)) * (SCIENCE_CENTER_X(_videoNavBar) - HOT_CENTER_X(_videoNavBar)), VIEW_Y(_videoNavBar.slider) + 1.5);
     
-    CGPoint contentOffset = scrollView.contentOffset;
-    NSLog(@"Current Scroll Position: x=%.2f, y=%.2f", contentOffset.x, contentOffset.y);
-    
+    CGPoint contentOffset = scrollView.contentOffset;    
     
     NSInteger type = ceil(contentOffset.x / SCREEN_WIDTH);
 

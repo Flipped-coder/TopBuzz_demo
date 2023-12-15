@@ -15,6 +15,7 @@
 - (void)layoutCollectionViewCellWithData:(DJCollectionItemInfo *)itemInfo {
 
     [self.imageView setFrame:CGRectMake(5, 5, 180, [itemInfo.imageCollectionFormatHeight floatValue])];
+    [self.imageView setImage:[UIImage imageNamed:@"loading"]];
     [DJWebImage djWebImageWithImageView:self.imageView urlString:itemInfo.picInfos[0].bmiddlePicString];
 
     

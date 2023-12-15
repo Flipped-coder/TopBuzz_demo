@@ -52,6 +52,8 @@
 }
 
 - (void)loadCollectionViewDataWithType:(RequestType)type {
+    NSLog(@"LoadingVIewData Page = %d", _currentPage);
+
     _currentType = type;
     [_viewModel loadCollectionItemInfoDataWithType:_currentType Page:_currentPage++];
 }
@@ -80,6 +82,7 @@
 // 观察者回调
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"collectionItemInfoArray"]) {
+        
         // 处理属性变化
         NSMutableArray <DJCollectionItemInfo *> *newValue = change[NSKeyValueChangeNewKey];
         [_layout appendCollectionItemInfoArray:newValue];
@@ -102,8 +105,6 @@
             default:break;
         }
         
-        
-        
         // 主队列中更新View
         __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -124,6 +125,7 @@
 
 #pragma mark - UICollectionViewDelegate
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    
     static NSString *CellIdentifier = @"cell";
     _cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     DJCollectionItemInfo *itemInfo = _viewModel.collectionItemInfoArrays[indexPath.item];
