@@ -25,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define WECHAT_BACKGROUND_GREY [UIColor colorWithRed:237.0/255 green:237.0/255 blue:237.0/255 alpha:1.0]
 // 微信绿
 #define WECHAT_GREEN [UIColor colorWithRed:29.0/255 green:192.0/255 blue:99.0/255 alpha:1]
+// 亮橘
+#define LIGHT_ORANGE [UIColor colorWithRed:(252/255.0) green:(96/255.0) blue:(63/255.0) alpha:1.0]
+
 
 @interface DJColor : UIView
 

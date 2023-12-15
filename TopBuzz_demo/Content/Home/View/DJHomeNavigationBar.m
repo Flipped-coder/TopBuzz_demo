@@ -13,6 +13,7 @@
 
 - (void)loadVideoNavBar {
     self.backgroundColor = LIGHT_GRAY;
+    
     // 设置按钮
     self.settingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.settingBtn setFrame:CGRectMake(20, 5, 30, 30)];

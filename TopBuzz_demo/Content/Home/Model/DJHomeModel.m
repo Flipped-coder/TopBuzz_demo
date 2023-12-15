@@ -90,7 +90,7 @@
     SourceDataItemInfo *itemInfo = [[SourceDataItemInfo alloc] init];
     itemInfo.created_at = [dictionary objectForKey:@"created_at"];
     itemInfo.text = [dictionary objectForKey:@"text_raw"];
-    
+    itemInfo.region_name = [dictionary objectForKey:@"region_name"];
     
     itemInfo.pic_urls = @[].mutableCopy;
     
@@ -119,7 +119,7 @@
     /**用户信息*/
     itemInfo.screen_name = [[dictionary objectForKey:@"user"] objectForKey:@"screen_name"];
     itemInfo.location = [[dictionary objectForKey:@"user"] objectForKey:@"location"];
-    itemInfo.profile_image_url = [[dictionary objectForKey:@"user"] objectForKey:@"profile_image_url"];
+    itemInfo.profile_image_url = [[dictionary objectForKey:@"user"] objectForKey:@"avatar_hd"];
     itemInfo.gender = [[dictionary objectForKey:@"user"] objectForKey:@"gender"];
     
     itemInfo.com_screen_name = [[dictionary objectForKey:@"user"] objectForKey:@"profile_image_url"];

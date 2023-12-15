@@ -18,6 +18,8 @@
 #define VIEW_Y(View)            (View.frame.origin.y)
 #define VIEW_WIDTH(View)        (View.frame.size.width)
 #define VIEW_HEIGHT(View)       (View.frame.size.height)
+#define VIEW_CENTER_Y(view) (VIEW_Y(view) + VIEW_HEIGHT(view)) / 2
+#define VIEW_CENTER_X(view) (VIEW_X(view) + VIEW_WIDTH(view)) / 2
 
 
 // 顶部高度

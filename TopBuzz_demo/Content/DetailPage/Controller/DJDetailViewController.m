@@ -6,9 +6,12 @@
 //
 
 #import "DJDetailViewController.h"
+#import "DJDetailView.h"
+#import "DJScreen.h"
 
 @interface DJDetailViewController ()
 @property (nonatomic, strong) DJCollectionItemInfo *itemInfo;
+@property (nonatomic, strong) DJDetailView *detailView;
 
 @end
 
@@ -18,6 +21,12 @@
     self = [self init];
     if (self) {
         _itemInfo = itemInfo;
+        [self.view setBackgroundColor:[UIColor whiteColor]];
+        DJDetailNavigationBar *navBar = [[DJDetailNavigationBar alloc] initWithFrame:CGRectMake(0, TOPSTATUSBAR_HEIGHT, SCREEN_WIDTH, NAVIGATION_HEIGHT) itemInfo:itemInfo];
+        [self.view addSubview:navBar];
+        _detailView = [[DJDetailView alloc] initWithFrame:CGRectMake(0, VIEW_Y(navBar) + VIEW_HEIGHT(navBar), SCREEN_WIDTH, SCREEN_HEIGHT) itemInfo:itemInfo];
+        [self.view addSubview:_detailView];
+
     }
     return self;
 }
@@ -26,8 +35,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
 
+    
+    
     
 }
 

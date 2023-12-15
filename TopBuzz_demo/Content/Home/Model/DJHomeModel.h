@@ -36,12 +36,13 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 
 /// 源数据模型
 @interface SourceDataItemInfo : NSObject
-@property (nonatomic, strong)NSString *created_at;        //发博时间
-@property (nonatomic, strong)NSString *text;              //微博内容
-@property (nonatomic, strong)NSNumber *reposts_count;     //转发数
-@property (nonatomic, strong)NSNumber *comments_count;    //评论数
-@property (nonatomic, strong)NSNumber *attitudes_count;   //表态数
-@property (nonatomic, strong)NSMutableArray <PictureInfo *> *pic_urls;           //图片数组
+@property (nonatomic, strong) NSString *created_at;        //发博时间
+@property (nonatomic, strong) NSString *text;              //微博内容
+@property (nonatomic, strong) NSNumber *reposts_count;     //转发数
+@property (nonatomic, strong) NSNumber *comments_count;    //评论数
+@property (nonatomic, strong) NSNumber *attitudes_count;   //表态数
+@property (nonatomic, strong) NSString *region_name;       //发布地址
+@property (nonatomic, strong) NSMutableArray <PictureInfo *> *pic_urls;           //图片数组
 
 /**用户信息*/
 @property (nonatomic, strong)NSString *screen_name;       //用户昵称

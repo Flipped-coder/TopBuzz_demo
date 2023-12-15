@@ -14,7 +14,7 @@
 
 - (void)layoutCollectionViewCellWithData:(DJCollectionItemInfo *)itemInfo {
 
-    [self.imageView setFrame:CGRectMake(5, 5, 180, [itemInfo.imageHeight doubleValue] * (180 / [itemInfo.imageWidth doubleValue]))];
+    [self.imageView setFrame:CGRectMake(5, 5, 180, [itemInfo.imageCollectionFormatHeight floatValue])];
     [DJWebImage djWebImageWithImageView:self.imageView urlString:itemInfo.picInfos[0].thumbnailPicString];
 
     

@@ -16,9 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *profileImageString;
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *created_at;
+@property (nonatomic, strong) NSString *region_name;
 @property (nonatomic, strong) NSString *likeNumber;
 @property (nonatomic, strong) NSNumber *imageWidth;
 @property (nonatomic, strong) NSNumber *imageHeight;
+@property (nonatomic, strong) NSNumber *imageCollectionFormatHeight;
+@property (nonatomic, strong) NSNumber *imageBrowserFormatHeight;
 @property (nonatomic, strong) NSMutableArray <PictureInfo *> *picInfos;
 
 + (DJCollectionItemInfo *)getCollectionItemInfoFromSourceData:(SourceDataItemInfo *)sourceData;

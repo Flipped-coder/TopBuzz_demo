@@ -89,6 +89,8 @@ typedef NS_ENUM(NSUInteger, ImageType) {
     itemInfo.profileImageString = sourceData.profile_image_url;
     itemInfo.text = sourceData.text;
     itemInfo.username = sourceData.screen_name;
+    itemInfo.created_at = [itemInfo dateFormatter:sourceData.created_at];
+    itemInfo.region_name = sourceData.region_name;
     itemInfo.likeNumber = [sourceData.attitudes_count stringValue];
     itemInfo.picInfos = sourceData.pic_urls;
 
@@ -100,11 +102,56 @@ typedef NS_ENUM(NSUInteger, ImageType) {
     return itemInfo;
 }
 
+- (NSString *)dateFormatter:(NSString * )sourceDate {
+    // 创建日期格式化器
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [dateFormatter setDateFormat:@"EEE MMM dd HH:mm:ss Z yyyy"];
+
+    // 将字符串转换为 NSDate
+    NSDate *date = [dateFormatter dateFromString:sourceDate];
+
+    // 获取当前日期的年份
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSInteger currentYear = [calendar component:NSCalendarUnitYear fromDate:[NSDate date]];
+
+    // 获取解析得到的日期的年份
+    NSInteger parsedYear = [calendar component:NSCalendarUnitYear fromDate:date];
+
+    // 计算时间间隔
+    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:date];
+
+    // 判断时间间隔，如果大于一天则使用日期格式化器
+    if (timeInterval > 24 * 60 * 60) {
+        NSDateFormatter *visualDateFormatter = [[NSDateFormatter alloc] init];
+        // 判断年份是否相同
+        if (currentYear != parsedYear) {
+            [visualDateFormatter setDateFormat:@"yyyy年MM月dd日"];
+        } else {
+            [visualDateFormatter setDateFormat:@"MM-dd HH:mm"];
+        }
+
+        NSString *visualDateString = [visualDateFormatter stringFromDate:date];
+        return visualDateString;
+    } else {
+        // 如果小于一天，则使用日期组件格式化器
+        NSDateComponentsFormatter *dateComponentsFormatter = [[NSDateComponentsFormatter alloc] init];
+        dateComponentsFormatter.unitsStyle = NSDateComponentsFormatterUnitsStyleFull;
+        dateComponentsFormatter.maximumUnitCount = 1;
+        NSString *relativeTimeString = [[dateComponentsFormatter stringFromTimeInterval:timeInterval] stringByAppendingString:@" ago"];
+        
+        return relativeTimeString;
+    }
+}
 
 
 - (void)computeItemCellHeight {
     float cellWidth = (SCREEN_WIDTH - 10) / 2;
+    float browserWidth = SCREEN_WIDTH - 40;
     float imageHight = [self.imageHeight floatValue] * (cellWidth / [self.imageWidth floatValue]);
+    float imageBrowserHight = [self.imageHeight floatValue] * (browserWidth / [self.imageWidth floatValue]);
+    self.imageCollectionFormatHeight = [NSNumber numberWithFloat:imageHight];
+    self.imageBrowserFormatHeight = [NSNumber numberWithFloat:imageBrowserHight];
     
     CGFloat labelWidth = 180; // UILabel 的宽度
 
@@ -124,7 +171,7 @@ typedef NS_ENUM(NSUInteger, ImageType) {
         labelHeight = 35;       // 外流只展示两行
     }
     
-    self.cellHeight = [NSNumber numberWithFloat:imageHight + labelHeight + 40];
+    self.cellHeight = [NSNumber numberWithFloat:imageHight + labelHeight + 50];
 }
 
 
