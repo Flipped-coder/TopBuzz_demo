@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIScrollView *pictureBrowser;
 @property (nonatomic, strong) UIScrollView *fullPictureBrowser;
 @property (nonatomic, strong) UIButton *detailBrowserBtn;
+@property (nonatomic, assign) NSInteger currentPage;
 
 @end
 
@@ -35,6 +36,7 @@
         [_pictureBrowser setBounces:YES];
         [_pictureBrowser setPagingEnabled:YES];
         [_pictureBrowser setAlwaysBounceHorizontal:YES];
+        _pictureBrowser.delegate = self;
         
         // 先只加载第一张图片
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -75,6 +77,7 @@
 
 - (void)detailBrowserBtnClick {
     if ([_dj_delegate respondsToSelector:@selector(loadFullPictureBrowser:)]) {
+        [_fullPictureBrowser setContentOffset:CGPointMake(VIEW_WIDTH(_fullPictureBrowser) * _currentPage, 0) animated:NO];
         [_dj_delegate loadFullPictureBrowser:_fullPictureBrowser];
     }}
 
@@ -143,6 +146,12 @@
 }
 
 
+
+#pragma mark --UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGPoint contentOffset = scrollView.contentOffset;
+    _currentPage = ceil(contentOffset.x / SCREEN_WIDTH);
+}
 
 
 @end

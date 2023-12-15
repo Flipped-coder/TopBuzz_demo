@@ -20,14 +20,14 @@
     UIImage *image = [DJWebImage getMemoryCacheImageWithUrlString:urlString];
     if (image) {
         imageView.image = image;
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         NSLog(@"getMemoryCacheImageWithUrlString");
         return;
     }
     image = [DJWebImage getDiskCacheImageWithUrlString:urlString];
     if (image) {
         imageView.image = image;
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         NSLog(@"getMemoryCacheImageWithUrlString");
         return;
     }

@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface DJDetailView : UIScrollView
+@interface DJDetailView : UIScrollView <UIScrollViewDelegate>
 @property (nonatomic, strong) UILabel *text;
 @property (nonatomic, weak) id <DJDetailViewDelegate> dj_delegate;
 
