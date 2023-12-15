@@ -32,8 +32,13 @@
         return;
     }
     
-    
-    [DJWebImage loadNetworkImageDataWithImageView:imageView urlString:urlString];
+    DJWebImageCacheManager *cacheManager = [DJWebImageCacheManager sharedManager];
+    //创建操作
+    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
+        [DJWebImage loadNetworkImageDataWithImageView:imageView urlString:urlString];
+    }];
+    //将操作添加到队列中
+    [cacheManager.operationQueue addOperation:op];
 }
 
 
@@ -51,7 +56,6 @@
 
 + (void)loadNetworkImageDataWithImageView:(UIImageView *)imageView urlString:(NSString *)urlString {
     NSLog(@"loadNetworkImageDataWithImageView");
-
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [request setValue:@"https://weibo.com/" forHTTPHeaderField:@"Referer"];
     [request setHTTPMethod:@"GET"];

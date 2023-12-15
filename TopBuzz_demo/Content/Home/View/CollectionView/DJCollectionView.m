@@ -133,7 +133,7 @@
     
     [_cell layoutCollectionViewCellWithData:itemInfo];
  
-    if (indexPath.item > _viewModel.collectionItemInfoArrays.count * 4 / 5 && _allowRequest) {
+    if (indexPath.item > _viewModel.collectionItemInfoArrays.count * 3 / 4 && _allowRequest) {
         [_viewModel loadCollectionItemInfoDataWithType:HotType Page:_currentPage++];
         _allowRequest = NO;
     }

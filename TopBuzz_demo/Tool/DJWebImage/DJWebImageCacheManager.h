@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DJWebImageCacheManager : NSObject
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
 
 - (UIImage *)getImageFromMemoryCacheWithUrlString:(NSString *)urlString;
 - (void)setMemoryCacheWithImage:(UIImage *)image urlString:(NSString *)urlString;
