@@ -52,6 +52,10 @@
         newNode.LastNode = _headNode;
         [_hashMap setObject:newNode forKey:urlString];
         _size = [NSNumber numberWithInt:[self.size intValue] + 1];
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [self writeToDiskLRU];
+        });
     }
     return deleteArray;
 }
@@ -66,12 +70,88 @@
     node.NextNode = _headNode.NextNode;
     _headNode.NextNode = node;
     node.LastNode = _headNode;
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self writeToDiskLRU];
+    });
+}
+
+- (void)writeToDiskLRU {
+    NSError *error;
+    NSURL *docsURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
+                                                            inDomain:NSUserDomainMask
+                                                   appropriateForURL:nil
+                                                              create:YES
+                                                               error:&error];
+    NSString *databasePath = [docsURL URLByAppendingPathComponent:@"DiskCacheLRU"].path;
+    
+//    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self requiringSecureCoding:NO error:&error];
+//    [data writeToFile:databasePath options:NSDataWritingAtomic error:&error];
+    [NSKeyedArchiver archiveRootObject:self toFile:databasePath];
+}
+
++ (CacheLRU *)readFromDiskLRU {
+    NSError *error;
+    NSURL *docsURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
+                                                            inDomain:NSUserDomainMask
+                                                   appropriateForURL:nil
+                                                              create:YES
+                                                               error:&error];
+    NSString *databasePath = [docsURL URLByAppendingPathComponent:@"DiskCacheLRU"].path;
+    
+    CacheLRU *lru = [NSKeyedUnarchiver unarchiveObjectWithFile:databasePath];
+    return lru;
+    
+}
+
+
+
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.hashMap forKey:@"hashMap"];
+    [encoder encodeObject:self.headNode forKey:@"headNode"];
+    [encoder encodeObject:self.tailNode forKey:@"tailNode"];
+    [encoder encodeObject:self.capacity forKey:@"capacity"];
+    [encoder encodeObject:self.size forKey:@"size"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self) {
+        self.hashMap = [decoder decodeObjectForKey:@"hashMap"];
+        self.headNode = [decoder decodeObjectForKey:@"headNode"];
+        self.tailNode = [decoder decodeObjectForKey:@"tailNode"];
+        self.capacity = [decoder decodeObjectForKey:@"capacity"];
+        self.size = [decoder decodeObjectForKey:@"size"];
+    }
+    return self;
+}
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end
 
 
 @implementation LRUNode
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.urlString forKey:@"urlString"];
+    [encoder encodeObject:self.LastNode forKey:@"LastNode"];
+    [encoder encodeObject:self.NextNode forKey:@"NextNode"];
+
+}
+
+- (instancetype)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self) {
+        self.urlString = [decoder decodeObjectForKey:@"urlString"];
+        self.LastNode = [decoder decodeObjectForKey:@"LastNode"];
+        self.NextNode = [decoder decodeObjectForKey:@"NextNode"];
+    }
+    return self;
+}
 
 @end
 

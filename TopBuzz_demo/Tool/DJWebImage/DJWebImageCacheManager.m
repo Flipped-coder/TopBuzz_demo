@@ -28,7 +28,14 @@ static DJWebImageCacheManager *sharedManager = nil;
     dispatch_once(&onceToken, ^{
         sharedManager = [[DJWebImageCacheManager alloc] init];
         sharedManager.memoryCache = [NSMutableDictionary dictionary];
-        sharedManager.diskLRU = [CacheLRU newLRUWithCapacity:100];
+        CacheLRU *diskLRU = [CacheLRU readFromDiskLRU];
+        if (diskLRU == nil) {
+            diskLRU = [CacheLRU newLRUWithCapacity:100];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [diskLRU writeToDiskLRU];
+            });
+        }
+        sharedManager.diskLRU = diskLRU;
         sharedManager.memoryLRU = [CacheLRU newLRUWithCapacity:50];
         sharedManager.semaphore = dispatch_semaphore_create(1);
         sharedManager.operationQueue = [[NSOperationQueue alloc] init];

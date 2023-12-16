@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LRUNode : NSObject
+@interface LRUNode : NSObject <NSCoding>
 @property (nonatomic, strong) NSString *urlString;
 @property (nonatomic, strong, nullable) LRUNode *LastNode;
 @property (nonatomic, strong, nullable) LRUNode *NextNode;
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface  CacheLRU: NSObject
+@interface  CacheLRU: NSObject <NSCoding, NSSecureCoding>
 @property (nonatomic, strong) NSMutableDictionary *hashMap;
 @property (nonatomic, strong) LRUNode *headNode;
 @property (nonatomic, strong) LRUNode *tailNode;
@@ -29,6 +29,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray <LRUNode *> *)putLRUWithUrlString:(NSString *)urlString;
 
 - (void)updateLRUWithUrlString:(NSString *)urlString;
+
+
+- (void)writeToDiskLRU;
++ (CacheLRU *)readFromDiskLRU;
+
 
 @end
 
