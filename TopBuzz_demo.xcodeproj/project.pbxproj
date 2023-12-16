@@ -33,6 +33,8 @@
 		3574D29F2B2881F10052BC57 /* DJCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3574D29E2B2881F10052BC57 /* DJCollectionLayout.m */; };
 		357B32242B2C1F6D00633D12 /* DJDetailNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B32232B2C1F6D00633D12 /* DJDetailNavigationBar.m */; };
 		357B32272B2C301700633D12 /* DJDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B32262B2C301700633D12 /* DJDetailView.m */; };
+		358593662B2D01BB00D337FF /* DJCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 358593652B2D01BB00D337FF /* DJCommentView.m */; };
+		358593692B2D02A700D337FF /* DJCommentViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 358593682B2D02A700D337FF /* DJCommentViewCell.m */; };
 		35D669C52B28886F00AB2A0D /* DJCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D669C42B28886F00AB2A0D /* DJCollectionViewCell.m */; };
 		35EC82332B2B2A4C00D93960 /* DJDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EC82322B2B2A4C00D93960 /* DJDetailViewController.m */; };
 		35EFFF452B2ACD3200BC6A75 /* DJWebImageCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EFFF442B2ACD3200BC6A75 /* DJWebImageCacheManager.m */; };
@@ -104,6 +106,10 @@
 		357B32232B2C1F6D00633D12 /* DJDetailNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJDetailNavigationBar.m; sourceTree = "<group>"; };
 		357B32252B2C301700633D12 /* DJDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJDetailView.h; sourceTree = "<group>"; };
 		357B32262B2C301700633D12 /* DJDetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJDetailView.m; sourceTree = "<group>"; };
+		358593642B2D01BB00D337FF /* DJCommentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJCommentView.h; sourceTree = "<group>"; };
+		358593652B2D01BB00D337FF /* DJCommentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJCommentView.m; sourceTree = "<group>"; };
+		358593672B2D02A700D337FF /* DJCommentViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJCommentViewCell.h; sourceTree = "<group>"; };
+		358593682B2D02A700D337FF /* DJCommentViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJCommentViewCell.m; sourceTree = "<group>"; };
 		35D669C32B28886F00AB2A0D /* DJCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewCell.h; sourceTree = "<group>"; };
 		35D669C42B28886F00AB2A0D /* DJCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewCell.m; sourceTree = "<group>"; };
 		35EC82312B2B2A4C00D93960 /* DJDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJDetailViewController.h; sourceTree = "<group>"; };
@@ -292,12 +298,24 @@
 		357B32212B2C1F4900633D12 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				358593632B2D01A200D337FF /* CommentView */,
 				357B32252B2C301700633D12 /* DJDetailView.h */,
 				357B32262B2C301700633D12 /* DJDetailView.m */,
 				357B32222B2C1F6D00633D12 /* DJDetailNavigationBar.h */,
 				357B32232B2C1F6D00633D12 /* DJDetailNavigationBar.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		358593632B2D01A200D337FF /* CommentView */ = {
+			isa = PBXGroup;
+			children = (
+				358593642B2D01BB00D337FF /* DJCommentView.h */,
+				358593652B2D01BB00D337FF /* DJCommentView.m */,
+				358593672B2D02A700D337FF /* DJCommentViewCell.h */,
+				358593682B2D02A700D337FF /* DJCommentViewCell.m */,
+			);
+			path = CommentView;
 			sourceTree = "<group>";
 		};
 		35CEF4322B2A326800B1CFFB /* DJWebImage */ = {
@@ -540,6 +558,7 @@
 			files = (
 				3574D2882B284A000052BC57 /* DJHomeView.m in Sources */,
 				353938322B2841A1003CB121 /* DJTabBar.m in Sources */,
+				358593692B2D02A700D337FF /* DJCommentViewCell.m in Sources */,
 				3566C87C2B2892CF0023BA7A /* DJHomeModel.m in Sources */,
 				35EC82332B2B2A4C00D93960 /* DJDetailViewController.m in Sources */,
 				351FE2F92B2CCE9E00E5ED9D /* DJCacheLRUManager.m in Sources */,
@@ -559,6 +578,7 @@
 				3574D2962B284FA70052BC57 /* DJColor.m in Sources */,
 				3574D29C2B2850A40052BC57 /* DJCollectionView.m in Sources */,
 				357B32242B2C1F6D00633D12 /* DJDetailNavigationBar.m in Sources */,
+				358593662B2D01BB00D337FF /* DJCommentView.m in Sources */,
 				350F215B2B2839F100299CFC /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

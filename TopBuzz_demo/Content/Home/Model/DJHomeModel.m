@@ -14,6 +14,8 @@
 #define INTERNATION_URL @"https://weibo.com/ajax/feed/hottimeline?since_id=0&refresh=1&group_id=1028036288&containerid=102803_ctg1_6288_-_ctg1_6288&extparam=discover%7Cnew_feed&max_id=0"
 #define SCIENCE_URL @"https://weibo.com/ajax/feed/hottimeline?since_id=0&refresh=1&group_id=1028035988&containerid=102803_ctg1_5988_-_ctg1_5988&extparam=discover%7Cnew_feed&max_id=0"
 
+#define COMMENT_URL @"https://weibo.com/ajax/statuses/buildComments?is_reload=1&is_show_bulletin=2&is_mix=0&count=20&type=feed&fetch_level=0&locale=zh-CN$count=100"
+
 
 @implementation DJHomeModel
 
@@ -54,9 +56,49 @@
     }];
 
     [dataTask resume];
-    
-
 }
+
+- (void)loadSourceCommemtDataItemInfoListWithID:(NSString *)Id uid:(NSString *)uid {
+    NSString *urlString = [[[[COMMENT_URL stringByAppendingString:@"&id="] stringByAppendingString:Id] stringByAppendingString:@"&uid="] stringByAppendingString:uid];
+
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    __weak typeof(self) weakSelf = self;
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf; // 重新强引用，避免在 Block 执行期间被释放
+
+        if (error) {
+            NSLog(@"Error: %@", error);
+        } else {
+            NSError *jsonError;
+            NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+
+            if (jsonError) {
+                NSLog(@"JSON Error: %@", jsonError);
+            } else {
+                NSMutableArray <SourceCommentItemInfo *>*listItemArray = @[].mutableCopy;
+                NSArray *dataArray = [responseObject objectForKey:@"data"];
+                if (dataArray.count == 0)
+                    return;
+                for (NSDictionary *dic in dataArray) {
+                    SourceCommentItemInfo *itemInfo = [SourceCommentItemInfo getSourceModelFromDictionary:dic];
+                    if (itemInfo) {
+                        [listItemArray addObject:itemInfo];
+                    }
+                }
+                strongSelf.sourceCommentItemArray = listItemArray;
+            }
+        }
+    }];
+
+    [dataTask resume];
+    
+    
+    
+}
+
 
 
 
@@ -120,16 +162,30 @@
     itemInfo.profile_image_url = [[dictionary objectForKey:@"user"] objectForKey:@"avatar_hd"];
     itemInfo.gender = [[dictionary objectForKey:@"user"] objectForKey:@"gender"];
     
-    itemInfo.com_screen_name = [[dictionary objectForKey:@"user"] objectForKey:@"profile_image_url"];
-    itemInfo.com_profile_image_url = [[dictionary objectForKey:@"user"] objectForKey:@"screen_name"];
-    itemInfo.com_text = [dictionary objectForKey:@"created_at"];
-    itemInfo.com_created_at = [dictionary objectForKey:@"source"];
     
+    itemInfo.Id = [[dictionary objectForKey:@"id"] stringValue];
+    itemInfo.uid = [[[dictionary objectForKey:@"user"] objectForKey:@"id"] stringValue];
+    
+    return itemInfo;
+}
+@end
+
+@implementation SourceCommentItemInfo
+
++ (SourceCommentItemInfo *)getSourceModelFromDictionary:(NSDictionary *)dictionary {
+    SourceCommentItemInfo *itemInfo = [[SourceCommentItemInfo alloc] init];
+    itemInfo.com_created_at = [dictionary objectForKey:@"created_at"];
+    itemInfo.com_text = [dictionary objectForKey:@"text_raw"];
+    itemInfo.com_screen_name = [[dictionary objectForKey:@"user"] objectForKey:@"screen_name"];
+    itemInfo.com_location = [dictionary objectForKey:@"source"];
+    itemInfo.com_profile_image_url = [[dictionary objectForKey:@"user"] objectForKey:@"avatar_hd"];
     return itemInfo;
 }
 
 
 @end
+
+
 
 @implementation PictureInfo
 

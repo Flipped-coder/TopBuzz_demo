@@ -34,6 +34,12 @@
     [_model loadSourceDataItemInfoListWithRequestType:type Page:page];
 }
 
+- (void)loadCommentDataWithID:(NSString *)Id uid:(NSString *)uid {
+    [_model loadSourceCommemtDataItemInfoListWithID:Id uid:uid];
+}
+
+
+
 - (void)refreshCollectionItemInfoDataWith:(RequestType)type {
     [_model loadSourceDataItemInfoListWithRequestType:type Page:1];
     [_collectionItemInfoArrays removeAllObjects];
@@ -43,6 +49,7 @@
 
 - (void)bindModel:(DJHomeModel *)model {
     [model addObserver:self forKeyPath:@"sourceDataItemArray" options:NSKeyValueObservingOptionNew context:nil];
+    [model addObserver:self forKeyPath:@"sourceCommentItemArray" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 // 观察者回调
@@ -51,16 +58,22 @@
         // 处理属性变化
         NSArray *sourceDataArray = change[NSKeyValueChangeNewKey];
         NSMutableArray <DJCollectionItemInfo *>*listItemArray = @[].mutableCopy;
-        
         for (SourceDataItemInfo *info in sourceDataArray) {
             DJCollectionItemInfo *itemInfo = [DJCollectionItemInfo getCollectionItemInfoFromSourceData:info];
             [listItemArray addObject:itemInfo];
         }
-        
         self.collectionItemInfoArray = listItemArray;
-        
         [_collectionItemInfoArrays addObjectsFromArray:_collectionItemInfoArray];
-
+    }
+    if ([keyPath isEqualToString:@"sourceCommentItemArray"]) {
+        // 处理属性变化
+        NSArray *sourceDataArray = change[NSKeyValueChangeNewKey];
+        NSMutableArray <DJCommentItemInfo *>*listItemArray = @[].mutableCopy;
+        for (SourceCommentItemInfo *info in sourceDataArray) {
+            DJCommentItemInfo *itemInfo = [DJCommentItemInfo getCommentItemFromSourceData:info];
+            [listItemArray addObject:itemInfo];
+        }
+        self.commentItemInfoArray = listItemArray;
     }
 }
 
@@ -82,6 +95,43 @@ typedef NS_ENUM(NSUInteger, ImageType) {
 };
 
 
+@implementation DJCommentItemInfo
+
++ (DJCommentItemInfo *)getCommentItemFromSourceData:(SourceCommentItemInfo *)sourceData {
+    DJCommentItemInfo *itemInfo = [[DJCommentItemInfo alloc] init];
+    itemInfo.com_text = sourceData.com_text;
+    itemInfo.com_screen_name = sourceData.com_screen_name;
+    itemInfo.com_profile_image_url = sourceData.com_profile_image_url;
+    itemInfo.com_created_at = [DJCollectionItemInfo dateFormatter:sourceData.com_created_at];
+    [itemInfo computeCellHeight];
+    if (sourceData.com_location)
+        itemInfo.com_location = sourceData.com_location;
+    else
+        itemInfo.com_location = @"未知IP";
+    return itemInfo;
+    
+}
+
+- (void)computeCellHeight {
+    float textWidth = 300;
+    NSDictionary *attributes = @{
+        NSFontAttributeName: [UIFont systemFontOfSize:15] // 你的字体大小
+    };
+    CGRect boundingRect = [_com_text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
+                                                   options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                attributes:attributes
+                                                   context:nil];
+    // 获取计算出的高度
+    CGFloat labelHeight = CGRectGetHeight(boundingRect);
+    self.text_height = [NSNumber numberWithFloat:labelHeight];
+    self.cell_height = [NSNumber numberWithFloat:labelHeight + 80];
+}
+
+
+@end
+
+
+
 @implementation DJCollectionItemInfo
 
 + (DJCollectionItemInfo *)getCollectionItemInfoFromSourceData:(SourceDataItemInfo *)sourceData{
@@ -89,12 +139,18 @@ typedef NS_ENUM(NSUInteger, ImageType) {
     itemInfo.profileImageString = sourceData.profile_image_url;
     itemInfo.text = sourceData.text;
     itemInfo.username = sourceData.screen_name;
-    itemInfo.created_at = [itemInfo dateFormatter:sourceData.created_at];
-    itemInfo.likeNumber = [sourceData.attitudes_count stringValue];
+    itemInfo.created_at = [DJCollectionItemInfo dateFormatter:sourceData.created_at];
     itemInfo.picInfos = sourceData.pic_urls;
     itemInfo.imageWidth = sourceData.pic_urls[0].width;
     itemInfo.imageHeight = sourceData.pic_urls[0].height;
     
+    itemInfo.repostCount = [sourceData.reposts_count stringValue];
+    itemInfo.commentCount = [sourceData.comments_count stringValue];
+    itemInfo.likeCount = [sourceData.attitudes_count stringValue];
+    
+    itemInfo.Id = sourceData.Id;
+    itemInfo.uid = sourceData.uid;
+
     itemInfo.textAttributedString = [itemInfo setTextAttributed:sourceData.text];
     
     if (sourceData.region_name)
@@ -131,7 +187,7 @@ typedef NS_ENUM(NSUInteger, ImageType) {
 
 
 
-- (NSString *)dateFormatter:(NSString * )sourceDate {
++ (NSString *)dateFormatter:(NSString * )sourceDate {
     // 创建日期格式化器
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];

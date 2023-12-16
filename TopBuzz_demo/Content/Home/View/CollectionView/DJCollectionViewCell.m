@@ -36,12 +36,11 @@
     [self.username setFrame:CGRectMake(VIEW_X(self.profileImageView) + VIEW_WIDTH(self.profileImageView) + 10, VIEW_Y(self.profileImageView), 100, 20)];
     
     
-    [self.likeIcon setFrame:CGRectMake(VIEW_WIDTH(self) - 55, VIEW_Y(self.username) + 5, 15, 15)];
+    [self.likeIcon setFrame:CGRectMake(VIEW_WIDTH(self) - 50, VIEW_Y(self.username) + 5, 15, 15)];
     
     
-    [self.likeNumber setText:itemInfo.likeNumber];
+    [self.likeNumber setText:itemInfo.likeCount];
     [self.likeNumber setFont:[UIFont systemFontOfSize:10]];
-    [self.likeNumber setTextAlignment:NSTextAlignmentRight];
     [self.likeNumber setFrame:CGRectMake(VIEW_X(self.likeIcon) + VIEW_WIDTH(self.likeIcon), VIEW_Y(self.likeIcon), 35, 15)];
     
     
@@ -108,6 +107,7 @@
         })];
         [self.contentView addSubview:({
             self.likeNumber = [[UILabel alloc] init];
+            [self.likeNumber setTextAlignment:NSTextAlignmentLeft];
             self.likeNumber;
         })];
     }

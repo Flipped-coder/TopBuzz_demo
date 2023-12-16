@@ -32,6 +32,8 @@
 
         [self.view addSubview:navBar];
         [self.view addSubview:_detailView];
+        
+        
 
     }
     return self;

@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F725EBE7-421F-4C43-A2D7-5E3616E92045"
-            shouldBeEnabled = "Yes"
+            uuid = "BD1F78ED-80BA-459D-BC2C-4B7F64F000D4"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TopBuzz_demo/Content/DetailPage/DJDetailViewController.m"
+            filePath = "TopBuzz_demo/Content/DetailPage/View/DJDetailView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
