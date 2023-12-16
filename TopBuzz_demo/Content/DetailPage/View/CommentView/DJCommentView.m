@@ -8,7 +8,7 @@
 #import "DJCommentView.h"
 #import "DJCommentViewCell.h"
 
-@interface DJCommentView () <UITableViewDelegate, UITableViewDataSource>
+@interface DJCommentView () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>
 @property (nonatomic, strong) NSArray <DJCommentItemInfo *> *itemInfoArray;
 @property (nonatomic, strong) DJCommentViewCell *cell;
 
@@ -47,6 +47,8 @@
          _cell = [[DJCommentViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
      }
     [_cell loadCommentCellWithData:_itemInfoArray[indexPath.row]];
+    _cell.textView.delegate = self;
+    
     return _cell;
 }
 
@@ -58,5 +60,22 @@
 
     return [_itemInfoArray[indexPath.row].cell_height floatValue];
 }
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    // 在这里控制是否允许点击
+    return NO;
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction API_DEPRECATED("Replaced by primaryActionForTextItem: and menuConfigurationForTextItem: for additional customization options.", ios(10.0, 17.0), visionos(1.0, 1.0)) {
+    
+    if ([_dj_delegate respondsToSelector:@selector(pushWebViewWithURL:)]) {
+        [_dj_delegate pushWebViewWithURL:URL];
+    }
+    
+    return NO;
+}
+
 
 @end

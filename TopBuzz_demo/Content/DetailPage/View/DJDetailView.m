@@ -11,12 +11,12 @@
 #import <objc/runtime.h>
 
 
-@interface DJDetailView ()
+@interface DJDetailView () <DJCommentViewDelegate>
 @property (nonatomic, strong) DJCollectionItemInfo *itemInfo;
 @property (nonatomic, strong) UIScrollView *fullPictureBrowser;
 @property (nonatomic, strong) UIButton *detailBrowserBtn;
 @property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, strong) DJHomeViewModel *viewModel;
+@property (nonatomic, strong) DJCommentViewModel *viewModel;
 @property (nonatomic, strong) DJCommentView *commentView;
 @property (nonatomic, assign) CGFloat commentView_Y;
 
@@ -28,7 +28,7 @@
     self = [self initWithFrame:frame];
     if (self) {
         _itemInfo = itemInfo;
-        _viewModel = [[DJHomeViewModel alloc] init];
+        _viewModel = [[DJCommentViewModel alloc] init];
         [self bindViewModel:_viewModel];
         [_viewModel loadCommentDataWithID:itemInfo.Id uid:itemInfo.uid];
         
@@ -125,7 +125,7 @@
     return self;
 }
 
-- (void)bindViewModel:(DJHomeViewModel *)viewModel {
+- (void)bindViewModel:(DJCommentViewModel *)viewModel {
     [viewModel addObserver:self forKeyPath:@"commentItemInfoArray" options:NSKeyValueObservingOptionNew context:nil];
 }
 
@@ -142,7 +142,7 @@
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             strongSelf.commentView = [[DJCommentView alloc] init];
-            
+            strongSelf.commentView.dj_delegate = strongSelf;
             [strongSelf.commentView setFrame:CGRectMake(0, strongSelf.commentView_Y, SCREEN_WIDTH, [strongSelf.viewModel.commentHeightSum floatValue])];
             strongSelf.commentView.backgroundColor = [UIColor whiteColor];
             [strongSelf addSubview:strongSelf.commentView];
@@ -151,9 +151,6 @@
         });
     }
 }
-
-
-
 
 
 
@@ -229,19 +226,24 @@
 
 
 
+- (void)pushWebViewWithURL:(NSURL *)url {
+    if ([_dj_delegate respondsToSelector:@selector(pushWebViewControllerWithURL:)]) {
+        [_dj_delegate pushWebViewControllerWithURL:url];
+    }
+}
+
+
 
 #pragma mark --UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint contentOffset = scrollView.contentOffset;
     _currentPage = ceil(contentOffset.x / SCREEN_WIDTH);
     
-    if (contentOffset.y > 100) {
+    if (contentOffset.y > 0) {
         scrollView.bounces = NO;
     } else {
         scrollView.bounces = YES;
     }
-    
-    
 }
 
 

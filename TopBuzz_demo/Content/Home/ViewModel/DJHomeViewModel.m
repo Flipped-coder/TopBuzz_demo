@@ -25,7 +25,6 @@
         _model = model;
         [self bindModel:_model];
         _collectionItemInfoArrays = @[].mutableCopy;
-        _commentHeightSum = 0;
     }
     return self;
 }
@@ -34,11 +33,6 @@
 - (void)loadCollectionItemInfoDataWithType:(RequestType)type Page:(int)page {
     [_model loadSourceDataItemInfoListWithRequestType:type Page:page];
 }
-
-- (void)loadCommentDataWithID:(NSString *)Id uid:(NSString *)uid {
-    [_model loadSourceCommemtDataItemInfoListWithID:Id uid:uid];
-}
-
 
 
 - (void)refreshCollectionItemInfoDataWith:(RequestType)type {
@@ -66,20 +60,6 @@
         self.collectionItemInfoArray = listItemArray;
         [_collectionItemInfoArrays addObjectsFromArray:_collectionItemInfoArray];
     }
-    if ([keyPath isEqualToString:@"sourceCommentItemArray"]) {
-        // 处理属性变化
-        NSArray *sourceDataArray = change[NSKeyValueChangeNewKey];
-        NSMutableArray <DJCommentItemInfo *>*listItemArray = @[].mutableCopy;
-        for (SourceCommentItemInfo *info in sourceDataArray) {
-            DJCommentItemInfo *itemInfo = [DJCommentItemInfo getCommentItemFromSourceData:info];
-            _commentHeightSum = [NSNumber numberWithFloat:[_commentHeightSum floatValue] + [itemInfo.cell_height floatValue] + 15];
-            [listItemArray addObject:itemInfo];
-        }
-        if ([_commentHeightSum floatValue] > 700) {
-            _commentHeightSum = [NSNumber numberWithFloat:700.0];
-        }
-        self.commentItemInfoArray = listItemArray;
-    }
 }
 
 
@@ -98,44 +78,6 @@ typedef NS_ENUM(NSUInteger, ImageType) {
     OriginalType               = 2,  // 原图
     ProfileType                = 3,  // 头像
 };
-
-
-@implementation DJCommentItemInfo
-
-+ (DJCommentItemInfo *)getCommentItemFromSourceData:(SourceCommentItemInfo *)sourceData {
-    DJCommentItemInfo *itemInfo = [[DJCommentItemInfo alloc] init];
-    itemInfo.com_text = sourceData.com_text;
-    itemInfo.com_screen_name = sourceData.com_screen_name;
-    itemInfo.com_profile_image_url = sourceData.com_profile_image_url;
-    itemInfo.com_created_at = [DJCollectionItemInfo dateFormatter:sourceData.com_created_at];
-    [itemInfo computeCellHeight];
-    if (sourceData.com_location)
-        itemInfo.com_location = sourceData.com_location;
-    else
-        itemInfo.com_location = @"未知IP";
-    return itemInfo;
-    
-}
-
-- (void)computeCellHeight {
-    float textWidth = 300;
-    NSDictionary *attributes = @{
-        NSFontAttributeName: [UIFont systemFontOfSize:15] // 你的字体大小
-    };
-    CGRect boundingRect = [_com_text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
-                                                   options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                                attributes:attributes
-                                                   context:nil];
-    // 获取计算出的高度
-    CGFloat labelHeight = CGRectGetHeight(boundingRect);
-    self.text_height = [NSNumber numberWithFloat:labelHeight];
-    self.cell_height = [NSNumber numberWithFloat:labelHeight + 70];
-}
-
-
-@end
-
-
 
 @implementation DJCollectionItemInfo
 

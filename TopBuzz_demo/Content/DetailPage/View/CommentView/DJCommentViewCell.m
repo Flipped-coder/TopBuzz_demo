@@ -31,14 +31,24 @@
     [_username setTextAlignment:NSTextAlignmentLeft];
     [self addSubview:_username];
     
-    // 评论
-    [_text setFrame:CGRectMake(VIEW_X(_username), VIEW_Y(_username) + VIEW_HEIGHT(_username), 300, [info.text_height floatValue])];
-    [_text setText:info.com_text];
-    [_text setFont:[UIFont systemFontOfSize:15]];
-    [_text setNumberOfLines:0];
-    [self addSubview:_text];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(VIEW_X(_username), VIEW_Y(_username) + VIEW_HEIGHT(_username), 300, [info.text_height floatValue])];
+    _textView.editable = NO;  // 使 UITextView 不可编辑
+    _textView.dataDetectorTypes = UIDataDetectorTypeLink;  // 设置数据检测器类型为链接
+    [_textView setText:info.com_text];
+    [_textView setScrollEnabled:NO];
+    [_textView setAdjustsFontForContentSizeCategory:YES];
+    [_textView setContentSize:CGSizeMake(300, VIEW_HEIGHT(_textView))];
+    [_textView setTextContainerInset:UIEdgeInsetsZero];
+    // 将 NSAttributedString 设置到 UITextView
+    [_textView setAttributedText:info.textAttributedString];
+    [_textView setFont:[UIFont systemFontOfSize:16]];
+    [self addSubview:_textView];
     
-    [_created_at_region setFrame:CGRectMake(VIEW_X(_text), VIEW_Y(_text) + VIEW_HEIGHT(_text) + 5, 300, 20)];
+    
+    
+    
+    
+    [_created_at_region setFrame:CGRectMake(VIEW_X(_textView), VIEW_Y(_textView) + VIEW_HEIGHT(_textView) + 5, 300, 20)];
     [_created_at_region setText:[[info.com_created_at stringByAppendingString:@"    "] stringByAppendingString:info.com_location]];
     [_created_at_region setTextColor:DARK_GRAY];
     [_created_at_region setFont:[UIFont systemFontOfSize:11]];
@@ -56,9 +66,10 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     _profileImageView.image = nil;
-    _text.text = nil;
+    _textView.text = nil;
     _username.text = nil;
     _created_at_region.text = nil;
+    _textView.text = nil;
 }
 
 
@@ -74,8 +85,8 @@
             self.profileImageView;
         })];
         [self.contentView addSubview:({
-            self.text = [[UILabel alloc] init];
-            self.text;
+            self.textView = [[UITextView alloc] init];
+            self.textView;
         })];
         [self.contentView addSubview:({
             self.username = [[UILabel alloc] init];

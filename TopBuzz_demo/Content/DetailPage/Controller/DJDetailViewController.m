@@ -8,6 +8,7 @@
 #import "DJDetailViewController.h"
 #import "DJDetailView.h"
 #import "DJScreen.h"
+#import <SafariServices/SafariServices.h>
 
 @interface DJDetailViewController () <DJNavigationViewDelegate, DJDetailViewDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) DJCollectionItemInfo *itemInfo;
@@ -80,6 +81,15 @@
 - (void)popDetailViewController { 
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void)pushWebViewControllerWithURL:(NSURL *)url {
+    // 创建 SFSafariViewController 对象，并传入要打开的 URL
+    SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+
+    // 在当前视图控制器上以模态方式显示 SFSafariViewController
+    [self presentViewController:safariViewController animated:YES completion:nil];
+}
+
 
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {

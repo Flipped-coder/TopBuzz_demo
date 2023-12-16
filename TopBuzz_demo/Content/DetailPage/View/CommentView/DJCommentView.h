@@ -6,11 +6,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DJHomeViewModel.h"
+#import "DJCommentViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol DJCommentViewDelegate <NSObject>
+@required
+- (void)pushWebViewWithURL:(NSURL *)url;
+
+@end
+
 @interface DJCommentView : UITableView
+@property (nonatomic, weak) id <DJCommentViewDelegate> dj_delegate;
 
 - (void)loadCommentData:(NSArray <DJCommentItemInfo *> *)itemInfo;
 

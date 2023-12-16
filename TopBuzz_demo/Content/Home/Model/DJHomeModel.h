@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @class SourceDataItemInfo;
 @class PictureInfo;
-@class SourceCommentItemInfo;
+
 /// 请求类型
 typedef NS_ENUM(NSUInteger, RequestType) {
     HotType                  = 0,  // 热门
@@ -23,8 +23,6 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 
 @interface DJHomeModel : NSObject
 @property (nonatomic, strong) NSArray<SourceDataItemInfo *> *sourceDataItemArray;
-@property (nonatomic, strong) NSArray<SourceCommentItemInfo *> *sourceCommentItemArray;
-
 
 /// 请求网络数据资源
 /// - Parameters:
@@ -32,8 +30,6 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 ///   - type: 请求资源类型
 ///   - page: 请求页码
 - (void)loadSourceDataItemInfoListWithRequestType:(RequestType)type Page:(int)page;
-
-- (void)loadSourceCommemtDataItemInfoListWithID:(NSString *)Id uid:(NSString *)uid;
 
 @end
 
@@ -61,19 +57,6 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 + (SourceDataItemInfo *)getSourceModelFromDictionary:(NSDictionary *)dictionary;
 
 @end
-
-@interface SourceCommentItemInfo : NSObject
-@property (nonatomic, strong) NSString *com_created_at;        //评论时间
-@property (nonatomic, strong) NSString *com_text;              //评论内容
-@property (nonatomic, strong) NSString *com_screen_name;       //用户昵称
-@property (nonatomic, strong) NSString *com_location;          //用户位置
-@property (nonatomic, strong) NSString *com_profile_image_url; //用户头像图片url
-
-+ (SourceCommentItemInfo *)getSourceModelFromDictionary:(NSDictionary *)dictionary;
-
-@end
-
-
 
 @interface PictureInfo : NSObject
 @property (nonatomic, strong) NSString *thumbnailPicString;     //缩略图url

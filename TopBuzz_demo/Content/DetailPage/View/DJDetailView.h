@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "DJDetailNavigationBar.h"
 #import "DJCommentView.h"
+#import "DJCommentViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadFullPictureBrowser:(UIScrollView *)fullPictureBrowser;
 
 - (void)exitFullPictureBrowser;
+
+- (void)pushWebViewControllerWithURL:(NSURL *)url;
 
 @end
 
