@@ -1,5 +1,0 @@
-source 'https://github.com/CocoaPods/Specs.git'
-
-target 'TopBuzz_demo' do 
-	pod 'MJRefresh'
-end
