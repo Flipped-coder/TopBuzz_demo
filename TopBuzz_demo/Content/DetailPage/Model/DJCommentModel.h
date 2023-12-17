@@ -26,11 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - CommemtData_Model
 
 @interface SourceCommentItemInfo : NSObject
-@property (nonatomic, strong) NSString *com_created_at;        // 评论时间
-@property (nonatomic, strong) NSString *com_text;              // 评论内容
-@property (nonatomic, strong) NSString *com_screen_name;       // 用户昵称
-@property (nonatomic, strong) NSString *com_location;          // 用户位置
-@property (nonatomic, strong) NSString *com_profile_image_url; // 用户头像图片url
+@property (nonatomic, strong, readonly) NSString *com_created_at;        // 评论时间
+@property (nonatomic, strong, readonly) NSString *com_text;              // 评论内容
+@property (nonatomic, strong, readonly) NSString *com_screen_name;       // 用户昵称
+@property (nonatomic, strong, readonly) NSString *com_location;          // 用户位置
+@property (nonatomic, strong, readonly) NSString *com_profile_image_url; // 用户头像图片url
 
 
 /// 将网络数据字典转为模型

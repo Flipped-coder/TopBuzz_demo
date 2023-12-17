@@ -78,24 +78,22 @@
 + (DJCollectionItemInfo *)getCollectionItemInfoFromSourceData:(SourceDataItemInfo *)sourceData{
     DJCollectionItemInfo *itemInfo = [[DJCollectionItemInfo alloc] init];
     /**博客内容**/
-    itemInfo.text = sourceData.text;
-    itemInfo.created_at = [itemInfo dateFormatter:sourceData.created_at];
-    itemInfo.region_name = [itemInfo getViewRegionName:sourceData.region_name];
-    itemInfo.repostCount = [sourceData.reposts_count stringValue];
-    itemInfo.commentCount = [sourceData.comments_count stringValue];
-    itemInfo.likeCount = [sourceData.attitudes_count stringValue];
-    itemInfo.Id = sourceData.Id;
-    itemInfo.picInfos = sourceData.pic_urls;
-
+    [itemInfo setValue:sourceData.text forKey:@"text"];
+    [itemInfo setValue:[itemInfo dateFormatter:sourceData.created_at] forKey:@"created_at"];
+    [itemInfo setValue:[itemInfo getViewRegionName:sourceData.region_name] forKey:@"region_name"];
+    [itemInfo setValue:[sourceData.reposts_count stringValue] forKey:@"repostCount"];
+    [itemInfo setValue:[sourceData.comments_count stringValue] forKey:@"commentCount"];
+    [itemInfo setValue:[sourceData.attitudes_count stringValue] forKey:@"likeCount"];
+    [itemInfo setValue:sourceData.Id forKey:@"Id"];
+    [itemInfo setValue:sourceData.pic_urls forKey:@"picInfos"];
     /**user 信息**/
-    itemInfo.username = sourceData.screen_name;
-    itemInfo.profileImageString = sourceData.profile_image_url;
-    itemInfo.uid = sourceData.uid;
-
+    [itemInfo setValue:sourceData.screen_name forKey:@"username"];
+    [itemInfo setValue:sourceData.profile_image_url forKey:@"profileImageString"];
+    [itemInfo setValue:sourceData.uid forKey:@"uid"];
     /**视图数据**/
-    itemInfo.imageWidth = sourceData.pic_urls[0].width;
-    itemInfo.imageHeight = sourceData.pic_urls[0].height;
-    itemInfo.textAttributedString = [itemInfo setTextAttributed:sourceData.text];
+    [itemInfo setValue:sourceData.pic_urls[0].width forKey:@"imageWidth"];
+    [itemInfo setValue:sourceData.pic_urls[0].height forKey:@"imageHeight"];
+    [itemInfo setValue:[itemInfo setTextAttributed:sourceData.text] forKey:@"textAttributedString"];
     [itemInfo computeViewHeight];
     
     return itemInfo;
@@ -189,9 +187,9 @@
     float imageBrowserHight = [self.imageHeight floatValue] * (browserWidth / [self.imageWidth floatValue]);
     float imageFullScreenFormatHeight = [self.imageHeight floatValue] * (SCREEN_WIDTH / [self.imageWidth floatValue]);
 
-    self.imageCollectionFormatHeight = [NSNumber numberWithFloat:imageHight];
-    self.imageBrowserFormatHeight = [NSNumber numberWithFloat:imageBrowserHight];
-    self.imageFullScreenFormatHeight = [NSNumber numberWithFloat:imageFullScreenFormatHeight];
+    [self setValue:[NSNumber numberWithFloat:imageHight] forKey:@"imageCollectionFormatHeight"];
+    [self setValue:[NSNumber numberWithFloat:imageBrowserHight] forKey:@"imageBrowserFormatHeight"];
+    [self setValue:[NSNumber numberWithFloat:imageFullScreenFormatHeight] forKey:@"imageFullScreenFormatHeight"];
     
     CGFloat collectionLabelWidth = 180; // UILabel 的宽度
     CGFloat browserLabelWidth = SCREEN_WIDTH - 40; // UILabel 的宽度
@@ -218,10 +216,10 @@
     if (collectionLabelHeight > 40) {
         collectionLabelHeight = 40;       // 外流只展示两行
     }
-    self.textCollectionFormatHeight = [NSNumber numberWithFloat:collectionLabelHeight];
-    self.textBrowserFormatHeight = [NSNumber numberWithFloat:CGRectGetHeight(browserBoundingRect)];
-
-    self.cellHeight = [NSNumber numberWithFloat:imageHight + collectionLabelHeight + 50];
+    
+    [self setValue:[NSNumber numberWithFloat:collectionLabelHeight] forKey:@"textCollectionFormatHeight"];
+    [self setValue:[NSNumber numberWithFloat:CGRectGetHeight(browserBoundingRect)] forKey:@"textBrowserFormatHeight"];
+    [self setValue:[NSNumber numberWithFloat:imageHight + collectionLabelHeight + 50] forKey:@"cellHeight"];
 }
 
 

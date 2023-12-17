@@ -38,21 +38,21 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 #pragma mark - Data_Model
 @interface SourceDataItemInfo : NSObject
 /**博客内容*/
-@property (nonatomic, strong) NSString *created_at;                       //发博时间
-@property (nonatomic, strong) NSString *text;                             //微博内容
-@property (nonatomic, strong) NSNumber *reposts_count;                    //转发数
-@property (nonatomic, strong) NSNumber *comments_count;                   //评论数
-@property (nonatomic, strong) NSNumber *attitudes_count;                  //表态数
-@property (nonatomic, strong) NSString *region_name;                      //发布地址
-@property (nonatomic, strong) NSString *Id;                               // 博客id
-@property (nonatomic, strong) NSMutableArray <PictureInfo *> *pic_urls;   //图片数组
+@property (nonatomic, strong, readonly) NSString *created_at;                       //发博时间
+@property (nonatomic, strong, readonly) NSString *text;                             //微博内容
+@property (nonatomic, strong, readonly) NSNumber *reposts_count;                    //转发数
+@property (nonatomic, strong, readonly) NSNumber *comments_count;                   //评论数
+@property (nonatomic, strong, readonly) NSNumber *attitudes_count;                  //表态数
+@property (nonatomic, strong, readonly) NSString *region_name;                      //发布地址
+@property (nonatomic, strong, readonly) NSString *Id;                               // 博客id
+@property (nonatomic, strong, readonly) NSMutableArray <PictureInfo *> *pic_urls;   //图片数组
 
 /**用户信息*/
-@property (nonatomic, strong) NSString *screen_name;       // 用户昵称
-@property (nonatomic, strong) NSString *location;          // 用户位置
-@property (nonatomic, strong) NSString *profile_image_url; // 用户头像图片url
-@property (nonatomic, strong) NSString *gender;            // 用户性别
-@property (nonatomic, strong) NSString *uid;               // 用户uid
+@property (nonatomic, strong, readonly) NSString *screen_name;       // 用户昵称
+@property (nonatomic, strong, readonly) NSString *location;          // 用户位置
+@property (nonatomic, strong, readonly) NSString *profile_image_url; // 用户头像图片url
+@property (nonatomic, strong, readonly) NSString *gender;            // 用户性别
+@property (nonatomic, strong, readonly) NSString *uid;               // 用户uid
 
 /// 字典转模型
 /// - Parameter dictionary: 网络原数据字典
@@ -63,12 +63,12 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 
 #pragma mark - PictureInfo_Model
 @interface PictureInfo : NSObject
-@property (nonatomic, strong) NSString *thumbnailPicString;     // 缩略图url
-@property (nonatomic, strong) NSString *bmiddlePicString;       // 中尺寸图片url
-@property (nonatomic, strong) NSString *largePicString;         // 中尺寸图片url
-@property (nonatomic, strong) NSString *originalPicString;      // 原图url
-@property (nonatomic, strong) NSNumber *width;                  // 图片宽度
-@property (nonatomic, strong) NSNumber *height;                 // 图片高度
+@property (nonatomic, strong, readonly) NSString *thumbnailPicString;     // 缩略图url
+@property (nonatomic, strong, readonly) NSString *bmiddlePicString;       // 中尺寸图片url
+@property (nonatomic, strong, readonly) NSString *largePicString;         // 中尺寸图片url
+@property (nonatomic, strong, readonly) NSString *originalPicString;      // 原图url
+@property (nonatomic, strong, readonly) NSNumber *width;                  // 图片宽度
+@property (nonatomic, strong, readonly) NSNumber *height;                 // 图片高度
  
 @end
 

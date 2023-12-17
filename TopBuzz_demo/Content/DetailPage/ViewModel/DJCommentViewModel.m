@@ -71,12 +71,13 @@
 /// 将原数据模型转为View模型
 + (DJCommentItemInfo *)getCommentItemFromSourceData:(SourceCommentItemInfo *)sourceData {
     DJCommentItemInfo *itemInfo = [[DJCommentItemInfo alloc] init];
-    itemInfo.com_text = sourceData.com_text;
-    itemInfo.com_screen_name = sourceData.com_screen_name;
-    itemInfo.com_profile_image_url = sourceData.com_profile_image_url;
-    itemInfo.com_created_at = [itemInfo dateFormatter:sourceData.com_created_at];
-    itemInfo.textAttributedString = [itemInfo replaceURLsWithLinksInString:sourceData.com_text];
-    itemInfo.com_location = [itemInfo getViewRegionName:sourceData.com_location];
+    [itemInfo setValue:sourceData.com_text forKey:@"com_text"];
+    [itemInfo setValue:sourceData.com_screen_name forKey:@"com_screen_name"];
+    [itemInfo setValue:sourceData.com_profile_image_url forKey:@"com_profile_image_url"];
+    [itemInfo setValue:[itemInfo dateFormatter:sourceData.com_created_at] forKey:@"com_created_at"];
+    [itemInfo setValue:[itemInfo replaceURLsWithLinksInString:sourceData.com_text] forKey:@"textAttributedString"];
+    [itemInfo setValue:[itemInfo getViewRegionName:sourceData.com_location] forKey:@"com_location"];
+    
     [itemInfo computeCellHeight];
 
     return itemInfo;
@@ -97,8 +98,8 @@
                                                    context:nil];
     // 获取计算出的高度
     CGFloat labelHeight = CGRectGetHeight(boundingRect);
-    self.text_height = [NSNumber numberWithFloat:labelHeight];
-    self.cell_height = [NSNumber numberWithFloat:labelHeight + 70];
+    [self setValue:[NSNumber numberWithFloat:labelHeight] forKey:@"text_height"];
+    [self setValue:[NSNumber numberWithFloat:labelHeight + 70] forKey:@"cell_height"];
 }
 
 

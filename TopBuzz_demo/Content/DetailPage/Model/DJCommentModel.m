@@ -63,11 +63,12 @@
 /// - Parameter dictionary: 网络原数据字典
 + (SourceCommentItemInfo *)getSourceModelFromDictionary:(NSDictionary *)dictionary {
     SourceCommentItemInfo *itemInfo = [[SourceCommentItemInfo alloc] init];
-    itemInfo.com_created_at = [dictionary objectForKey:@"created_at"];
-    itemInfo.com_text = [dictionary objectForKey:@"text_raw"];
-    itemInfo.com_screen_name = [[dictionary objectForKey:@"user"] objectForKey:@"screen_name"];
-    itemInfo.com_location = [dictionary objectForKey:@"source"];
-    itemInfo.com_profile_image_url = [[dictionary objectForKey:@"user"] objectForKey:@"avatar_hd"];
+    [itemInfo setValue:[dictionary objectForKey:@"created_at"] forKey:@"com_created_at"];
+    [itemInfo setValue:[dictionary objectForKey:@"text_raw"] forKey:@"com_text"];
+    [itemInfo setValue:[[dictionary objectForKey:@"user"] objectForKey:@"screen_name"] forKey:@"com_screen_name"];
+    [itemInfo setValue:[dictionary objectForKey:@"source"] forKey:@"com_location"];
+    [itemInfo setValue:[[dictionary objectForKey:@"user"] objectForKey:@"avatar_hd"] forKey:@"com_profile_image_url"];
+
     return itemInfo;
 }
 

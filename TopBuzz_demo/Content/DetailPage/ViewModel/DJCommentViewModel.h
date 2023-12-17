@@ -26,14 +26,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - CommentViewItemInfo
 @interface DJCommentItemInfo : NSObject
-@property (nonatomic, strong) NSString *com_text;              // 评论内容
-@property (nonatomic, strong) NSString *com_created_at;        // 评论时间
-@property (nonatomic, strong) NSString *com_screen_name;       // 用户昵称
-@property (nonatomic, strong) NSString *com_location;          // 用户位置
-@property (nonatomic, strong) NSString *com_profile_image_url; // 用户头像图片url
-@property (nonatomic, strong) NSNumber *text_height;           // 文本高度
-@property (nonatomic, strong) NSNumber *cell_height;           // 当前视图所需高度
-@property (nonatomic, strong) NSAttributedString *textAttributedString;     // // 富文本字符属性
+@property (nonatomic, strong, readonly) NSString *com_text;              // 评论内容
+@property (nonatomic, strong, readonly) NSString *com_created_at;        // 评论时间
+@property (nonatomic, strong, readonly) NSString *com_screen_name;       // 用户昵称
+@property (nonatomic, strong, readonly) NSString *com_location;          // 用户位置
+@property (nonatomic, strong, readonly) NSString *com_profile_image_url; // 用户头像图片url
+@property (nonatomic, strong, readonly) NSNumber *text_height;           // 文本高度
+@property (nonatomic, strong, readonly) NSNumber *cell_height;           // 当前视图所需高度
+@property (nonatomic, strong, readonly) NSAttributedString *textAttributedString;     // // 富文本字符属性
 /// 将原数据模型转为View模型
 /// - Parameter sourceData: 原数据模型
 + (DJCommentItemInfo *)getCommentItemFromSourceData:(SourceCommentItemInfo *)sourceData;
