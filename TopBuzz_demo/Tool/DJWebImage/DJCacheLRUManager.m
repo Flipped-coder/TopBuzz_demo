@@ -84,8 +84,6 @@
                                                                error:&error];
     NSString *databasePath = [docsURL URLByAppendingPathComponent:@"DiskCacheLRU"].path;
     
-//    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self requiringSecureCoding:NO error:&error];
-//    [data writeToFile:databasePath options:NSDataWritingAtomic error:&error];
     [NSKeyedArchiver archiveRootObject:self toFile:databasePath];
 }
 

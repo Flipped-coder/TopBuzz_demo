@@ -25,12 +25,6 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 @interface DJHomeModel : NSObject
 @property (nonatomic, strong) NSArray<SourceDataItemInfo *> *sourceDataItemArray;       // 源数据模型数组
 
-/// 请求网络资源数据
-/// - Parameters:
-///   - type: 资讯类型
-///   - page: 请求范围
-- (void)loadSourceDataItemInfoListWithRequestType:(RequestType)type Page:(int)page;
-
 @end
 
 

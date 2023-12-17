@@ -13,13 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - CommemtModel_Class
 @interface DJCommentModel : NSObject
 @property (nonatomic, strong) NSArray<SourceCommentItemInfo *> *sourceCommentItemArray;     // 评论模型数组
-
-/// 网络请求博客的评论数据
-/// - Parameters:
-///   - Id: 博客ID
-///   - uid: 博主uid
-- (void)loadSourceCommemtDataItemInfoListWithID:(NSString *)Id uid:(NSString *)uid;
-
 @end
 
 

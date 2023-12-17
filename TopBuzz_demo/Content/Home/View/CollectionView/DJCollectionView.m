@@ -64,7 +64,6 @@
 // 观察者回调
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"collectionItemInfoArray"]) {
-        
         // 处理属性变化
         NSMutableArray <DJCollectionItemInfo *> *newValue = change[NSKeyValueChangeNewKey];
         [_layout appendCollectionItemInfoArray:newValue];

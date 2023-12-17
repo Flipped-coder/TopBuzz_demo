@@ -56,37 +56,51 @@
 
 + (void)loadNetworkImageDataWithImageView:(UIImageView *)imageView urlString:(NSString *)urlString {
     NSLog(@"loadNetworkImageDataWithImageView");
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [request setValue:@"https://weibo.com/" forHTTPHeaderField:@"Referer"];
-    [request setHTTPMethod:@"GET"];
-    // 创建NSURLSession对象
-    NSURLSession *session = [NSURLSession sharedSession];
+    DJWebImageCacheManager *cacheManager = [DJWebImageCacheManager sharedManager];
+
     
-    
-    __weak typeof(imageView) weakSelf = imageView;
+    //创建队列
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //创建操作
+    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        [request setValue:@"https://weibo.com/" forHTTPHeaderField:@"Referer"];
+        [request setHTTPMethod:@"GET"];
+        // 创建NSURLSession对象
+        NSURLSession *session = [NSURLSession sharedSession];
+        
+        
+        __weak typeof(imageView) weakSelf = imageView;
 
 
-    // 创建NSURLSessionDataTask对象
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@", error);
-        } else {
-            
-            __strong typeof(weakSelf) strongSelf = weakSelf;
 
-            // 处理响应数据
-            dispatch_async(dispatch_get_main_queue(), ^{
-                DJWebImageCacheManager *cacheManager = [DJWebImageCacheManager sharedManager];
-                UIImage *image = [UIImage imageWithData:data];
-                strongSelf.image = image;
-                strongSelf.contentMode = UIViewContentModeScaleAspectFill;
-                [cacheManager setMemoryCacheWithImage:image urlString:urlString];
-                [cacheManager setDiskCacheWithImage:image urlString:urlString];
-            });
-        }
+        // 创建NSURLSessionDataTask对象
+        NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                NSLog(@"Error: %@", error);
+            } else {
+                
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+
+                // 处理响应数据
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    DJWebImageCacheManager *cacheManager = [DJWebImageCacheManager sharedManager];
+                    UIImage *image = [UIImage imageWithData:data];
+                    strongSelf.image = image;
+                    strongSelf.contentMode = UIViewContentModeScaleAspectFill;
+                    [cacheManager setMemoryCacheWithImage:image urlString:urlString];
+                    [cacheManager setDiskCacheWithImage:image urlString:urlString];
+                });
+            }
+        }];
+        // 启动任务
+        [dataTask resume];
+
+
     }];
-    // 启动任务
-    [dataTask resume];
+    //将操作添加到队列中
+    [cacheManager.operationQueue addOperation:op];
+
 }
 
 @end

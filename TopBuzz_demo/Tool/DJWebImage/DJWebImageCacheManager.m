@@ -39,7 +39,7 @@ static DJWebImageCacheManager *sharedManager = nil;
         sharedManager.memoryLRU = [CacheLRU newLRUWithCapacity:50];
         sharedManager.semaphore = dispatch_semaphore_create(1);
         sharedManager.operationQueue = [[NSOperationQueue alloc] init];
-        sharedManager.operationQueue.maxConcurrentOperationCount = 10;
+        sharedManager.operationQueue.maxConcurrentOperationCount = 15;
     });
     return sharedManager;
 }
