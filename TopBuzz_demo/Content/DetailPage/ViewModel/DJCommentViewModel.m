@@ -6,8 +6,8 @@
 //
 
 #import "DJCommentViewModel.h"
-#import <UIKit/UIKit.h>
 #import "DJColor.h"
+#import "DJCommentNetworking.h"
 
 #pragma mark - ViewModel
 @interface DJCommentViewModel ()
@@ -29,7 +29,7 @@
 
 /// 加载CommentView所需的模型数据
 - (void)loadCommentDataWithID:(NSString *)Id uid:(NSString *)uid {
-    [_model loadSourceCommemtDataItemInfoListWithID:Id uid:uid];
+    [DJCommentNetworking loadSourceCommemtDataItemInfoListWithID:Id uid:uid model:_model];
 }
 
 

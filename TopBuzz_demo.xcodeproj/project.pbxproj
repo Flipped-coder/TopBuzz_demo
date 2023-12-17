@@ -40,6 +40,8 @@
 		35D669C52B28886F00AB2A0D /* DJCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D669C42B28886F00AB2A0D /* DJCollectionViewCell.m */; };
 		35EC82332B2B2A4C00D93960 /* DJDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EC82322B2B2A4C00D93960 /* DJDetailViewController.m */; };
 		35EFFF452B2ACD3200BC6A75 /* DJWebImageCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EFFF442B2ACD3200BC6A75 /* DJWebImageCacheManager.m */; };
+		35F2A2E92B2ED904004B9B13 /* DJCommentNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F2A2E72B2ED904004B9B13 /* DJCommentNetworking.m */; };
+		35F2A2F12B2ED931004B9B13 /* DJHomeNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F2A2EF2B2ED931004B9B13 /* DJHomeNetworking.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +124,10 @@
 		35EC82322B2B2A4C00D93960 /* DJDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJDetailViewController.m; sourceTree = "<group>"; };
 		35EFFF432B2ACD3200BC6A75 /* DJWebImageCacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJWebImageCacheManager.h; sourceTree = "<group>"; };
 		35EFFF442B2ACD3200BC6A75 /* DJWebImageCacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJWebImageCacheManager.m; sourceTree = "<group>"; };
+		35F2A2E72B2ED904004B9B13 /* DJCommentNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCommentNetworking.m; sourceTree = "<group>"; };
+		35F2A2E82B2ED904004B9B13 /* DJCommentNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCommentNetworking.h; sourceTree = "<group>"; };
+		35F2A2EF2B2ED931004B9B13 /* DJHomeNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJHomeNetworking.m; sourceTree = "<group>"; };
+		35F2A2F02B2ED931004B9B13 /* DJHomeNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJHomeNetworking.h; sourceTree = "<group>"; };
 		5E71CEE2E161CCC6E896B486 /* libPods-TopBuzz_demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TopBuzz_demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB8BDA26D7A41D4B199FB7B7 /* Pods-TopBuzz_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopBuzz_demo.release.xcconfig"; path = "Target Support Files/Pods-TopBuzz_demo/Pods-TopBuzz_demo.release.xcconfig"; sourceTree = "<group>"; };
 		EE352BDF5D9E51E81AD39AB6 /* Pods-TopBuzz_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopBuzz_demo.debug.xcconfig"; path = "Target Support Files/Pods-TopBuzz_demo/Pods-TopBuzz_demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -272,6 +278,7 @@
 		3574D27C2B2848D90052BC57 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				35F2A2EE2B2ED931004B9B13 /* Networking */,
 				3574D27F2B2848F20052BC57 /* Model */,
 				3574D27E2B2848E80052BC57 /* ViewModel */,
 				3574D27D2B2848E20052BC57 /* View */,
@@ -383,12 +390,31 @@
 		35EC82302B2B2A2C00D93960 /* DetailPage */ = {
 			isa = PBXGroup;
 			children = (
+				35F2A2E62B2ED904004B9B13 /* Networking */,
 				3546A1952B2D8A2A0025F716 /* Model */,
 				3546A1962B2D8A320025F716 /* ViewModel */,
 				357B32212B2C1F4900633D12 /* View */,
 				357B32202B2C1F3B00633D12 /* Controller */,
 			);
 			path = DetailPage;
+			sourceTree = "<group>";
+		};
+		35F2A2E62B2ED904004B9B13 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				35F2A2E72B2ED904004B9B13 /* DJCommentNetworking.m */,
+				35F2A2E82B2ED904004B9B13 /* DJCommentNetworking.h */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		35F2A2EE2B2ED931004B9B13 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				35F2A2EF2B2ED931004B9B13 /* DJHomeNetworking.m */,
+				35F2A2F02B2ED931004B9B13 /* DJHomeNetworking.h */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		36A74BA2E2C0ACD3E8370953 /* Frameworks */ = {
@@ -600,10 +626,12 @@
 				350F21692B2839F300299CFC /* main.m in Sources */,
 				35D669C52B28886F00AB2A0D /* DJCollectionViewCell.m in Sources */,
 				35EFFF452B2ACD3200BC6A75 /* DJWebImageCacheManager.m in Sources */,
+				35F2A2F12B2ED931004B9B13 /* DJHomeNetworking.m in Sources */,
 				3539382B2B283FA1003CB121 /* DJTabBarController.m in Sources */,
 				353938282B283CD7003CB121 /* HomeViewController.m in Sources */,
 				3546A19C2B2D8ACF0025F716 /* DJCommentViewModel.m in Sources */,
 				3574D2962B284FA70052BC57 /* DJColor.m in Sources */,
+				35F2A2E92B2ED904004B9B13 /* DJCommentNetworking.m in Sources */,
 				3574D29C2B2850A40052BC57 /* DJCollectionView.m in Sources */,
 				357B32242B2C1F6D00633D12 /* DJDetailNavigationBar.m in Sources */,
 				358593662B2D01BB00D337FF /* DJCommentView.m in Sources */,

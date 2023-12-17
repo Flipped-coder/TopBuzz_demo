@@ -9,6 +9,7 @@
 #import "DJScreen.h"
 #import "DJColor.h"
 #include <objc/runtime.h>
+#import "DJHomeNetworking.h"
 
 #pragma mark - ViewModel
 @interface DJHomeViewModel ()
@@ -30,12 +31,12 @@
 
 /// 加载View所需的模型数据
 - (void)loadCollectionItemInfoDataWithType:(RequestType)type Page:(int)page {
-    [_model loadSourceDataItemInfoListWithRequestType:type Page:page];
+    [DJHomeNetworking loadSourceDataItemInfoListWithRequestType:type Page:page model:_model];
 }
 
 /// 刷新请求页（默认请求最新的第一页）
 - (void)refreshCollectionItemInfoDataWith:(RequestType)type {
-    [_model loadSourceDataItemInfoListWithRequestType:type Page:1];
+    [DJHomeNetworking loadSourceDataItemInfoListWithRequestType:type Page:1 model:_model];
     // 刷新后需要请求原视图数据列表 重新添加
     [_collectionItemInfoArrays removeAllObjects];
 }
